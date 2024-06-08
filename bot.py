@@ -72,7 +72,7 @@ async def amogus(ctx):
 @bot.command()
 async def kaçcm(ctx):
     cm = random.randint(5,25)
-    await ctx.send(cm, "\n", "8" + "=" * cm + "D")
+    await ctx.send(f"{cm} cm \n{'8' + '=' * cm + 'D'}")
 
 @bot.command()
 async def zar(ctx, num: int):
@@ -80,58 +80,38 @@ async def zar(ctx, num: int):
         roll = random.randint(1, num)
         await ctx.send(roll)
     else:
-        await ctx.send(TypeError)
+        await ctx.send("Geçersiz sayı!")
 
 # Bans User
-@bot.tree.command(name = "ban", description = "Ban User")
-@app_commands.checks.has_permissions(ban_members = True)
+@bot.tree.command(name="ban", description="Ban User")
+@app_commands.checks.has_permissions(ban_members=True)
 async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
     try:
-        await member.ban(reason = reason)
-        await interaction.response.defer()
-        await asyncio.sleep(4)
-        sent_message = await interaction.followup.send_message(f"{member.name}] banlandı. Sebep: {reason}")
-        await asyncio.sleep(5)
-        await sent_message.delete()
+        await member.ban(reason=reason)
+        await interaction.response.send_message(f"{member.name} banlandı. Sebep: {reason}", ephemeral=True, delete_after=5)
     except Exception as e:
-        await interaction.response.defer()
-        await asyncio.sleep(4)
-        error_message = await interaction.followup.send_message(f"Bir hata oluştu. {str(e)}")
-        await asyncio.sleep(5)
-        await error_message.delete() 
+        await interaction.response.send_message(f"Bir hata oluştu: {str(e)}", ephemeral=True, delete_after=5)
 
 # If user doesn't have the permission to ban show error to only user.
 @ban.error
 async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        sent_message = await interaction.followup.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
-        await asyncio.sleep(5)
-        await sent_message.delete()
+        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral=True, delete_after=5)
 
 # Removes Messages
-@bot.tree.command(name = "temizle", description = "Belirli sayıda mesajı sil")
-@app_commands.checks.has_permissions(manage_messages = True)
+@bot.tree.command(name="temizle", description="Belirli sayıda mesajı sil")
+@app_commands.checks.has_permissions(manage_messages=True)
 async def temizle(interaction: discord.Interaction, amount: int):
     if amount > 0:
-        deleted = await interaction.channel.purge(limit = amount)
-        await interaction.response.defer()
-        await asyncio.sleep(4)
-        sent_message = await interaction.followup.send(f"{len(deleted)} mesaj başarıyla silindi.")
-        await asyncio.sleep(5)
-        await sent_message.delete()
+        deleted = await interaction.channel.purge(limit=amount)
+        await interaction.response.send_message(f"{len(deleted)} mesaj başarıyla silindi.", ephemeral=True, delete_after=5)
     else:
-        await interaction.response.defer()
-        await asyncio.sleep(4)
-        sent_message = await interaction.followup.send(f"Geçersiz sayı.")
-        await asyncio.sleep(5)
-        await sent_message.delete()
+        await interaction.response.send_message("Geçersiz sayı.", ephemeral=True, delete_after=5)
 
-#If user doesn't have the permission to remove messages show error to only user.
+# If user doesn't have the permission to remove messages show error to only user.
 @temizle.error
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        sent_message = await interaction.followup.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
-        await asyncio.sleep(5)
-        await sent_message.delete()
+        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral=True, delete_after=5)
 
 bot.run(TOKEN)
