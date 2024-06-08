@@ -3,6 +3,7 @@ import discord
 import random
 import asyncio
 from discord.ext import commands
+from discord import app_commands
 from dotenv import load_dotenv
 from strings import *
 
@@ -61,5 +62,50 @@ async def patlat(ctx):
 @bot.command()
 async def amogus(ctx):
     await ctx.send(amongus)
+
+@bot.command()
+async def kaçcm(ctx):
+    cm = random.randint(5,25)
+    await ctx.send(cm, "\n", "8" + "=" * cm + "D")
+
+@bot.command()
+async def zar(ctx, num: int):
+    if num > 1:
+        roll = random.randint(1, num)
+        await ctx.send(roll)
+    else:
+        await ctx.send(TypeError)
+
+# Bans User
+@bot.tree.command(name = "ban", description = "Ban User")
+@app_commands.check.has_permissions(ban_members = True)
+async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
+    try:
+        await member.ban(reason = reason)
+        await interaction.response.send_message(f"{member.name}] banlandı. Sebep: {reason}")
+    except Exception as e:
+        await interaction.response.send_message(f"Bir hata oluştu. {str(e)}")
+
+# If user doesn't have the permission to ban show error to only user.
+@ban.error
+async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    if isinstance(error, app_commands.CheckFailure):
+        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
+
+# Removes Messages
+@bot.tree.command(name = "temizle", description = "Belirli sayıda mesajı sil")
+@app_commands.check.has_permissions(manage_messages = True)
+async def temizle(interaction: discord.Interaction, amount: int):
+    if amount > 0:
+        deleted = await interaction.channel.purge(limit = amount)
+        await interaction.response.send_message(f"{len(deleted)} mesaj başarıyla silindi.")
+    else:
+        await interaction.response.send_message("Geçersiz sayı.")
+
+# If user doesn't have the permission to remove messages show error to only user.
+@temizle.error
+async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    if isinstance(error, app_commands.CheckFailure):
+        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
 
 bot.run(TOKEN)
