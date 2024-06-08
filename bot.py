@@ -41,6 +41,12 @@ async def send_random_messages():
 @bot.event
 async def on_ready():
     print(f"Bot {bot.user.name} olarak giriş yaptı.")
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} commands")
+    except Exception as e:
+        print(e)
+
     bot.loop.create_task(send_random_messages())
 
 @bot.event
@@ -78,34 +84,54 @@ async def zar(ctx, num: int):
 
 # Bans User
 @bot.tree.command(name = "ban", description = "Ban User")
-@app_commands.check.has_permissions(ban_members = True)
+@app_commands.checks.has_permissions(ban_members = True)
 async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
     try:
         await member.ban(reason = reason)
-        await interaction.response.send_message(f"{member.name}] banlandı. Sebep: {reason}")
+        await interaction.response.defer()
+        await asyncio.sleep(4)
+        sent_message = await interaction.followup.send_message(f"{member.name}] banlandı. Sebep: {reason}")
+        await asyncio.sleep(5)
+        await sent_message.delete()
     except Exception as e:
-        await interaction.response.send_message(f"Bir hata oluştu. {str(e)}")
+        await interaction.response.defer()
+        await asyncio.sleep(4)
+        error_message = await interaction.followup.send_message(f"Bir hata oluştu. {str(e)}")
+        await asyncio.sleep(5)
+        await error_message.delete() 
 
 # If user doesn't have the permission to ban show error to only user.
 @ban.error
 async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
+        sent_message = await interaction.followup.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
+        await asyncio.sleep(5)
+        await sent_message.delete()
 
 # Removes Messages
 @bot.tree.command(name = "temizle", description = "Belirli sayıda mesajı sil")
-@app_commands.check.has_permissions(manage_messages = True)
+@app_commands.checks.has_permissions(manage_messages = True)
 async def temizle(interaction: discord.Interaction, amount: int):
     if amount > 0:
         deleted = await interaction.channel.purge(limit = amount)
-        await interaction.response.send_message(f"{len(deleted)} mesaj başarıyla silindi.")
+        await interaction.response.defer()
+        await asyncio.sleep(4)
+        sent_message = await interaction.followup.send(f"{len(deleted)} mesaj başarıyla silindi.")
+        await asyncio.sleep(5)
+        await sent_message.delete()
     else:
-        await interaction.response.send_message("Geçersiz sayı.")
+        await interaction.response.defer()
+        await asyncio.sleep(4)
+        sent_message = await interaction.followup.send(f"Geçersiz sayı.")
+        await asyncio.sleep(5)
+        await sent_message.delete()
 
-# If user doesn't have the permission to remove messages show error to only user.
+#If user doesn't have the permission to remove messages show error to only user.
 @temizle.error
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
+        sent_message = await interaction.followup.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral = True)
+        await asyncio.sleep(5)
+        await sent_message.delete()
 
 bot.run(TOKEN)
