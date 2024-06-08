@@ -46,7 +46,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    if message.content == "sa" or "Sa" or "SA" or "sA":
+    if message.content.lower() == "sa":
         await message.channel.send("as")
     await bot.process_commands(message)
 
@@ -60,6 +60,6 @@ async def patlat(ctx):
     
 @bot.command()
 async def amogus(ctx):
-    await ctx.send(amogus)
+    await ctx.send(amongus)
 
 bot.run(TOKEN)
