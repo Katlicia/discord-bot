@@ -8,7 +8,7 @@ from discord import app_commands
 from dotenv import load_dotenv
 from strings import *
 import pytz
-
+import re
 
 load_dotenv()
 
@@ -40,6 +40,18 @@ async def send_random_messages():
             message = random.choice(random_messages)
             await channel.send(message)
 
+# 31 Text Control
+def is_pure_text(content):
+    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
+    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
+    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
+
+    content = re.sub(url_pattern, '', content)
+    content = re.sub(mention_pattern, '', content)
+    content = re.sub(emoji_pattern, '', content)
+
+    return "31" in content
+
 async def send_goodmorning_message():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
@@ -67,7 +79,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    if "31" in message.content:
+    if is_pure_text(message.content):
         await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
     if message.content.lower() == "sa":
         await message.channel.send("as")
