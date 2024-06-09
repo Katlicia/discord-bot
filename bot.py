@@ -26,7 +26,8 @@ random_messages = [
     "beyler kendimi turşu yaptım eheeeeeee",
     "memet sen misin la",
     "LETS PLAY FOOTBALL",
-    "onları sağamazsın"
+    "onları sağamazsın",
+    "kufredecem"
 ]
 
 CHANNEL_ID = 1077904975902019676
@@ -83,6 +84,9 @@ async def on_message(message):
         await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
     if message.content.lower() == "sa":
         await message.channel.send("as")
+    if message.author.id == 316608072669986816: # author ID
+        if message.content.lower() == "kufredecem":
+            await message.channel.send("amcik") 
     await bot.process_commands(message)
 
 @bot.command()
