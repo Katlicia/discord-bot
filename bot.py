@@ -2,10 +2,12 @@ import os
 import discord
 import random
 import asyncio
+from datetime import datetime
 from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
 from strings import *
+import pytz
 
 
 load_dotenv()
@@ -38,6 +40,18 @@ async def send_random_messages():
             message = random.choice(random_messages)
             await channel.send(message)
 
+async def send_goodmorning_message():
+    await bot.wait_until_ready()
+    channel = bot.get_channel(CHANNEL_ID)
+    turkey_tz = pytz.timezone('Europe/Istanbul')
+    while not bot.is_closed():
+        now = datetime.now(turkey_tz).strftime('%H:%M:%S')
+        if now == "10:00:00":
+            if channel is not None:
+                message = "gunaydin gencolar"
+                await channel.send(message)
+        await asyncio.sleep(1)
+
 @bot.event
 async def on_ready():
     print(f"Bot {bot.user.name} olarak giriş yaptı.")
@@ -53,6 +67,8 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
+    if "31" in message.content:
+        await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
     if message.content.lower() == "sa":
         await message.channel.send("as")
     await bot.process_commands(message)
