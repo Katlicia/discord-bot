@@ -33,7 +33,7 @@ async def send_random_messages():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
     while not bot.is_closed():
-        await asyncio.sleep(random.randint(1800, 3600))  # Random time between 30min to 1 Hour
+        await asyncio.sleep(random.randint(7200, 18000))  # Random time between 2H to 5H
         if channel is not None:
             message = random.choice(random_messages)
             await channel.send(message)
@@ -84,7 +84,7 @@ async def zar(ctx, num: int):
 
 # Bans User
 @bot.tree.command(name="ban", description="Ban User")
-@app_commands.checks.has_permissions(ban_members=True)
+# @app_commands.checks.has_permissions(ban_members=True)
 async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
     try:
         await member.ban(reason=reason)
