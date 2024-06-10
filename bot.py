@@ -94,7 +94,7 @@ async def on_message(message):
 
 async def daily_mention():
     await bot.wait_until_ready()
-    channel = bot.get_channel(1077904975902019676)
+    channel = bot.get_channel(1077907619630546994)
     user = await bot.fetch_user(673274021567004712)
     
     while not bot.is_closed():
