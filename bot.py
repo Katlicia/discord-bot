@@ -63,7 +63,9 @@ async def send_goodmorning_message():
             if channel is not None:
                 message = "gunaydin gencolar"
                 await channel.send(message)
-        await asyncio.sleep(1)
+            await asyncio.sleep(1)
+        else:
+            await asyncio.sleep(1)
 
 @bot.event
 async def on_ready():
