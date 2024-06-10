@@ -3,6 +3,7 @@ import discord
 import random
 import asyncio
 from datetime import datetime
+from datetime import timedelta
 from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
@@ -91,6 +92,26 @@ async def on_message(message):
             await message.channel.send("amcik") 
     await bot.process_commands(message)
 
+async def daily_mention():
+    await bot.wait_until_ready()
+    channel = bot.get_channel(1077904975902019676)
+    user = await bot.fetch_user(673274021567004712)
+    
+    while not bot.is_closed():
+        now = datetime.now()
+        random_hour = random.randint(0, 23)
+        random_minute = random.randint(0, 59)
+        random_time = now.replace(hour=random_hour, minute=random_minute, second=0, microsecond=0)
+
+        if random_time < now:
+            random_time += timedelta(days=1)
+
+        wait_time = (random_time - now).total_seconds()
+        await asyncio.sleep(wait_time)
+        
+        await channel.send(f'{user.mention}, merasim')
+        await asyncio.sleep(24 * 60 * 60)
+
 @bot.command()
 async def özet(ctx):
     await ctx.send("Ensar alianın eski manitle cp yapıyo sonra alihan ensarı banlıyo bizde tekrediyoz orayi")
@@ -102,6 +123,10 @@ async def patlat(ctx):
 @bot.command()
 async def amogus(ctx):
     await ctx.send(amongus)
+
+@bot.command()
+async def duyuru(ctx):
+    await ctx.send("ibo olayi (gerisini biliyorsunuz)")
 
 @bot.command()
 async def kaçcm(ctx):
