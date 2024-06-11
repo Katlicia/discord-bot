@@ -2,12 +2,10 @@ import os
 import discord
 import random
 import asyncio
-from datetime import datetime
-from datetime import timedelta
-from discord.ext import commands
-from discord import app_commands
+from datetime import datetime, timedelta
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
-from strings import *
+from discord import app_commands
 import pytz
 import re
 
@@ -16,6 +14,7 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.default()
+intents.members = True  # Üye verilerine erişmek için gerekli
 intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -37,10 +36,27 @@ async def send_random_messages():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
     while not bot.is_closed():
-        await asyncio.sleep(random.randint(7200, 18000))  # Random time between 2H to 5H
+        await asyncio.sleep(random.randint(7200, 18000))  # 2 ila 5 saat arasında rastgele süre
         if channel is not None:
             message = random.choice(random_messages)
             await channel.send(message)
+
+@tasks.loop(hours=10)
+async def birthday_message():
+    channel = bot.get_channel(1077904975902019676)
+    guild = bot.get_guild(1077904974983479348)
+    role = discord.utils.get(guild.roles, name="Dogum Gunu Cocugu")
+    if role is None:
+        print(f"Rol bulunamadı.")
+        return
+    members_with_role = [member for member in guild.members if role in member.roles]
+    if members_with_role:
+        member_mentions = ", ".join([member.mention for member in members_with_role])
+        await channel.send(f"Doğum günün kutlu olsun {member_mentions}")
+
+@birthday_message.before_loop
+async def before_birthday_message():
+    await bot.wait_until_ready()
 
 # 31 Text Control
 def is_pure_text(content):
@@ -67,7 +83,7 @@ async def send_goodmorning_message():
                 await channel.send(message)
                 good_morning_sent = True
             await asyncio.sleep(1)
-        elif now != "10:00":
+        elif now != "10:00:00":
             good_morning_sent = False
         await asyncio.sleep(60)
 
@@ -81,6 +97,9 @@ async def on_ready():
         print(e)
 
     bot.loop.create_task(send_random_messages())
+    bot.loop.create_task(send_goodmorning_message())
+    bot.loop.create_task(daily_mention())
+    birthday_message.start()
 
 @bot.event
 async def on_message(message):
@@ -121,11 +140,11 @@ async def özet(ctx):
 
 @bot.command()
 async def patlat(ctx):
-    await ctx.send(trollface)
-    
+    await ctx.send("trollface")
+
 @bot.command()
 async def amogus(ctx):
-    await ctx.send(amongus)
+    await ctx.send("amongus")
 
 @bot.command()
 async def duyuru(ctx):
@@ -133,7 +152,7 @@ async def duyuru(ctx):
 
 @bot.command()
 async def kaçcm(ctx):
-    cm = random.randint(5,25)
+    cm = random.randint(5, 25)
     await ctx.send(f"{cm} cm \n{'8' + '=' * cm + 'D'}")
 
 @bot.command()
