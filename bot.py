@@ -58,15 +58,18 @@ async def send_goodmorning_message():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
     turkey_tz = pytz.timezone('Europe/Istanbul')
+    good_morning_sent = False
     while not bot.is_closed():
         now = datetime.now(turkey_tz).strftime('%H:%M:%S')
-        if now == "10:00:00":
+        if now == "10:00:00" and not good_morning_sent:
             if channel is not None:
                 message = "gunaydin gencolar"
                 await channel.send(message)
+                good_morning_sent = True
             await asyncio.sleep(1)
-        else:
-            await asyncio.sleep(1)
+        elif now != "10:00":
+            good_morning_sent = False
+        await asyncio.sleep(60)
 
 @bot.event
 async def on_ready():
