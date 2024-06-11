@@ -52,7 +52,7 @@ async def birthday_message():
     members_with_role = [member for member in guild.members if role in member.roles]
     if members_with_role:
         member_mentions = ", ".join([member.mention for member in members_with_role])
-        await channel.send(f"Doğum günün kutlu olsun {member_mentions}")
+        await channel.send(f"Doğum günün kutlu olsun {members_with_role}")
 
 @birthday_message.before_loop
 async def before_birthday_message():
