@@ -52,7 +52,7 @@ async def birthday_message():
     members_with_role = [member for member in guild.members if role in member.roles]
     if members_with_role:
         member_mentions = ", ".join([member.mention for member in members_with_role])
-        await channel.send(f"Doğum günün kutlu olsun {members_with_role}")
+        await channel.send(f"Doğum günün kutlu olsun {member_mentions}")
 
 @birthday_message.before_loop
 async def before_birthday_message():
@@ -74,18 +74,15 @@ async def send_goodmorning_message():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
     turkey_tz = pytz.timezone('Europe/Istanbul')
-    good_morning_sent = False
     while not bot.is_closed():
-        now = datetime.now(turkey_tz).strftime('%H:%M:%S')
-        if now == "10:00:00" and not good_morning_sent:
-            if channel is not None:
-                message = "gunaydin gencolar"
-                await channel.send(message)
-                good_morning_sent = True
-            await asyncio.sleep(1)
-        elif now != "10:00:00":
-            good_morning_sent = False
-        await asyncio.sleep(60)
+        now = datetime.now(turkey_tz)
+        target_time = now.replace(hour=10, minute=0, second=0, microsecond=0)
+        if now > target_time:
+            target_time += timedelta(days=1)
+        wait_time = (target_time - now).total_seconds()
+        await asyncio.sleep(wait_time)
+        if channel is not None:
+            await channel.send("gunaydin gencolar")
 
 @bot.event
 async def on_ready():
@@ -109,9 +106,9 @@ async def on_message(message):
         await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
     if message.content.lower() == "sa":
         await message.channel.send("as")
-    if message.author.id == 316608072669986816: # author ID
+    if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
-            await message.channel.send("amcik") 
+            await message.channel.send("amcik")
     await bot.process_commands(message)
 
 async def daily_mention():
