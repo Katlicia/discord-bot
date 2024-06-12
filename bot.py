@@ -128,8 +128,11 @@ async def daily_mention():
         wait_time = (random_time - now).total_seconds()
         await asyncio.sleep(wait_time)
         
-        await channel.send(f'{user.mention}, merasim')
+        await channel.send(f'{user.mention} merasim')
         await asyncio.sleep(24 * 60 * 60)
+
+
+### "!" Commands
 
 @bot.command()
 async def özet(ctx):
@@ -159,6 +162,32 @@ async def zar(ctx, num: int):
         await ctx.send(roll)
     else:
         await ctx.send("Geçersiz sayı!")
+
+@bot.command()
+async def birlestir(ctx, *args):
+    if not args:
+        await ctx.send("En az bir kelime ekle")
+        return
+    def get_random_letter(word):
+        word_len = len(word)
+        if word_len <= 3:
+            return word
+        choice = random.choice(["start", "middle", "end"])
+        if choice == "start":
+            return word[:3]
+        elif choice == "middle":
+            start = word_len // 2 - 1
+            return word[start:start + 3]
+        elif choice == "end":
+            return word[-3:]
+    
+    letters = []
+    for word in args:
+        letters.append(get_random_letter(word))
+    combined_word = "".join(letters)
+    await ctx.send(combined_word)
+
+#### "/" Commands
 
 # Bans User
 @bot.tree.command(name="ban", description="Ban User")
