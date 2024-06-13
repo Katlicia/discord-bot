@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from discord import app_commands
 import pytz
 import re
+from strings import *
 
 load_dotenv()
 
@@ -140,11 +141,11 @@ async def özet(ctx):
 
 @bot.command()
 async def patlat(ctx):
-    await ctx.send("trollface")
+    await ctx.send(trollface)
 
 @bot.command()
 async def amogus(ctx):
-    await ctx.send("amongus")
+    await ctx.send(amongus)
 
 @bot.command()
 async def duyuru(ctx):
@@ -152,12 +153,13 @@ async def duyuru(ctx):
 
 @bot.command()
 async def kaçcm(ctx):
+    
     cm = random.randint(5, 25)
     await ctx.send(f"{cm} cm \n{'8' + '=' * cm + 'D'}")
 
 @bot.command()
 async def zar(ctx, num: int):
-    if num > 1:
+    if num >= 1:
         roll = random.randint(1, num)
         await ctx.send(roll)
     else:
@@ -191,7 +193,6 @@ async def birlestir(ctx, *args):
 
 # Bans User
 @bot.tree.command(name="ban", description="Ban User")
-# @app_commands.checks.has_permissions(ban_members=True)
 async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
     try:
         await member.ban(reason=reason)
