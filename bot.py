@@ -37,7 +37,7 @@ async def send_random_messages():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
     while not bot.is_closed():
-        await asyncio.sleep(random.randint(7200, 18000))  # 2 ila 5 saat arasında rastgele süre
+        await asyncio.sleep(random.randint(18000, 43200))  # 5H-12H
         if channel is not None:
             message = random.choice(random_messages)
             await channel.send(message)
