@@ -140,6 +140,10 @@ async def özet(ctx):
     await ctx.send("Ensar alianın eski manitle cp yapıyo sonra alihan ensarı banlıyo bizde tekrediyoz orayi")
 
 @bot.command()
+async def olay(ctx):
+    await ctx.send("Ensar alianın eski manitle cp yapıyo sonra alihan ensarı banlıyo bizde tekrediyoz orayi")
+
+@bot.command()
 async def patlat(ctx):
     await ctx.send(trollface)
 
