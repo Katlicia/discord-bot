@@ -170,6 +170,13 @@ async def zar(ctx, num: int):
         await ctx.send("Geçersiz sayı!")
 
 @bot.command()
+async def boy(ctx, boy: int):
+    if boy <= 100:
+        await ctx.send("?")
+    else:
+        await ctx.send(f"Boyunuz {boy} cm.")
+
+@bot.command()
 async def birlestir(ctx, *args):
     if not args:
         await ctx.send("En az bir kelime ekle")
