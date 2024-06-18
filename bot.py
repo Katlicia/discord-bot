@@ -227,6 +227,7 @@ async def plaka(ctx, city: str):
         if not found:
             await ctx.send("Geçersiz şehir.")
 
+# Creates new words based of given words.
 @bot.command()
 async def birlestir(ctx, *args):
     if not args:
