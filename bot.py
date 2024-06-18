@@ -173,6 +173,8 @@ async def zar(ctx, num: int):
 async def boy(ctx, boy: int):
     if boy <= 100:
         await ctx.send("?")
+    elif boy >= 300:
+        await ctx.send("?")
     else:
         await ctx.send(f"Boyunuz {boy} cm.")
 
