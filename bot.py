@@ -2,6 +2,7 @@ import os
 import discord
 import random
 import asyncio
+import sqlite3
 from datetime import datetime, timedelta
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -170,13 +171,35 @@ async def zar(ctx, num: int):
         await ctx.send("Geçersiz sayı!")
 
 @bot.command()
-async def boy(ctx, boy: int):
-    if boy <= 100:
+async def boy(ctx, height: int):
+    if height <= 100:
         await ctx.send("?")
-    elif boy >= 300:
+    elif height >= 300:
         await ctx.send("?")
     else:
-        await ctx.send(f"Boyunuz {boy} cm.")
+        await ctx.send(f"Boyunuz {height} cm.")
+
+# Finds city name by plate vice versa.
+@bot.command()
+async def plaka(ctx, city: str):
+    conn = sqlite3.connect("cities.db")
+    c = conn.cursor()
+    if city.isdigit():
+        plate_num = int(city)
+        c.execute("SELECT Name FROM cities WHERE Plate = ?", (plate_num))
+        result = c.fetchone()
+        if result:
+            await ctx.send(f"{plate_num} numaralı plaka {result[0]} ilinindir.")
+        else:
+            await ctx.send("Geçersiz plaka.")
+    else:
+        c.execute("SELECT Plate FROM cities Where Name = ?", (city))
+        result = c.fetchone()
+        if result:
+            await ctx.send(f"{city.title()} şehrinin plakası {result[0]}'dır.")
+        else:
+            await ctx.send("Geçersiz şehir.")
+    conn.close()
 
 @bot.command()
 async def birlestir(ctx, *args):
