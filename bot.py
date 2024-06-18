@@ -181,22 +181,22 @@ async def boy(ctx, height: int):
 
 # Finds city name by plate vice versa.
 @bot.command()
-async def plaka(ctx, city: str):
+async def plaka(ctx, input: str):
     conn = sqlite3.connect("cities.db")
     c = conn.cursor()
-    if city.isdigit():
-        plate_num = int(city)
-        c.execute("SELECT Name FROM cities WHERE Plate = ?", (plate_num))
+    if input.isdigit():
+        plate_num = int(input)
+        c.execute("SELECT Name FROM city WHERE Plate = ?", (plate_num,))
         result = c.fetchone()
         if result:
             await ctx.send(f"{plate_num} numaralı plaka {result[0]} ilinindir.")
         else:
             await ctx.send("Geçersiz plaka.")
     else:
-        c.execute("SELECT Plate FROM cities Where Name = ?", (city))
+        c.execute("SELECT Plate FROM city WHERE Name = ?", (input.capitalize(),))
         result = c.fetchone()
         if result:
-            await ctx.send(f"{city.title()} şehrinin plakası {result[0]}'dır.")
+            await ctx.send(f"{input.capitalize()} şehrinin plakası {result[0]}'dır.")
         else:
             await ctx.send("Geçersiz şehir.")
     conn.close()
