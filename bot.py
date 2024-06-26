@@ -29,7 +29,8 @@ random_messages = [
     "memet sen misin la",
     "LETS PLAY FOOTBALL",
     "onları sağamazsın",
-    "kufredecem"
+    "kufredecem",
+    "aga eski lol be"
 ]
 
 CHANNEL_ID = 1077904975902019676
