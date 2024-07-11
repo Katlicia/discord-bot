@@ -180,6 +180,24 @@ async def boy(ctx, height: int):
     else:
         await ctx.send(f"Boyunuz {height} cm.")
 
+@bot.command()
+async def avatar(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
+    if member.avatar != member.default_avatar:
+        avatar_url = member.avatar.url
+    else:
+        avatar_url = member.default_avatar
+    await ctx.send(f"{avatar_url}")
+
+@bot.command()
+async def banner(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
+    user = await bot.fetch_user(member.id)
+    banner_url = user.banner.url if user.banner else "Banner yok."
+    await ctx.send(f"{banner_url}")
+
 
 cities = [
     ('1', 'Adana'), ('2', 'Adıyaman'), ('3', 'Afyon'), ('4', 'Ağrı'),
