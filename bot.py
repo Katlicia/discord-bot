@@ -96,9 +96,9 @@ async def on_ready():
     except Exception as e:
         print(e)
 
-    bot.loop.create_task(send_random_messages())
+    #bot.loop.create_task(send_random_messages())
     bot.loop.create_task(send_goodmorning_message())
-    bot.loop.create_task(daily_mention())
+    #bot.loop.create_task(daily_mention())
     birthday_message.start()
 
 @bot.event
