@@ -9,11 +9,12 @@ from dotenv import load_dotenv
 from discord import app_commands
 import pytz
 import re
-from strings import *
 
 load_dotenv()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
+amongus = os.getenv("amongus")
+trollface = os.getenv("trollface")
 
 intents = discord.Intents.default()
 intents.members = True  # Üye verilerine erişmek için gerekli
@@ -180,6 +181,7 @@ async def boy(ctx, height: int):
     else:
         await ctx.send(f"Boyunuz {height} cm.")
 
+# Sends avatar of member.
 @bot.command()
 async def avatar(ctx, member: discord.Member = None):
     if member is None:
@@ -190,6 +192,7 @@ async def avatar(ctx, member: discord.Member = None):
         avatar_url = member.default_avatar
     await ctx.send(f"{avatar_url}")
 
+# Sends banner of member.
 @bot.command()
 async def banner(ctx, member: discord.Member = None):
     if member is None:
