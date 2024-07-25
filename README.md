@@ -1,4 +1,4 @@
-#Discord Bot
+# Discord Bot
 ## Commands 📁
 | Name       | Category | Type       | Description                                |
 |------------|----------|------------|------------------------------------------- |
