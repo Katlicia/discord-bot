@@ -9,12 +9,11 @@ from dotenv import load_dotenv
 from discord import app_commands
 import pytz
 import re
+from strings import *
 
 load_dotenv()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
-amongus = os.getenv("amongus")
-trollface = os.getenv("trollface")
 
 intents = discord.Intents.default()
 intents.members = True  # Üye verilerine erişmek için gerekli
