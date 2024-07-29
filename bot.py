@@ -73,6 +73,17 @@ def is_pure_text(content):
 
     return "31" in content
 
+# İbo Control
+def is_pure_text2(content):
+    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
+    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
+    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
+
+    content = re.sub(url_pattern, '', content)
+    content = re.sub(mention_pattern, '', content)
+    content = re.sub(emoji_pattern, '', content)
+    return "ibo" in content
+
 async def send_goodmorning_message():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
@@ -106,12 +117,14 @@ async def on_message(message):
     if message.author == bot.user:
         return
     if is_pure_text(message.content):
-        await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
+        await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF"),
+    if is_pure_text2(message.content):
+        await message.reply(":sob: :skull:")
     if message.content.lower() == "sa":
         await message.channel.send("as")
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
-            await message.channel.send("amcik :sob: :skull:")
+            await message.channel.send("amcik")
     await bot.process_commands(message)
 
 async def daily_mention():
