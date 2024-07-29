@@ -111,7 +111,7 @@ async def on_message(message):
         await message.channel.send("as")
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
-            await message.channel.send("amcik")
+            await message.channel.send("amcik :sob: :skull:")
     await bot.process_commands(message)
 
 async def daily_mention():
