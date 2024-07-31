@@ -1,7 +1,7 @@
 # Discord Bot
 ## Commands 📁
-| Name       | Category | Type       | Description                                |
-|------------|----------|------------|------------------------------------------- |
+| Name       | Category | Type       | Description                                    |
+|------------|----------|------------|-------------------------------------------     |
 | avatar     | Data     | ! Command  | Retrieves desired users profile picture.       |
 | banner     | Data     | ! Command  | Retrieves desired users banner picture.        |
 | patlat     | Fun      | ! Command  | Sends an ASCII image of trollface.             |
@@ -13,3 +13,5 @@
 | boy        | Info     | ! Command  | Returns given height.                          |
 | duyuru     | Info     | ! Command  | Returns a specific event.                      |
 | özet-olay  | Info     | ! Command  | Returns a specific event.                      |
+| ban        | Admin    | / Command  | Bans user.                                     |
+| temizle    | Admin    | / Command  | Clears last X messages from chat.              |
