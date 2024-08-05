@@ -450,6 +450,30 @@ async def hug(ctx, member: discord.Member):
     else:
         await ctx.send("API'den veri çekilemedi.")
 
+@bot.command()
+async def commands(ctx):
+    await ctx.send(
+    """
+    - **`avatar`** (Data) - Retrieves desired users profile picture.
+    - **`avatarsv`** (Data) - Retrieves server icon.
+    - **`banner`** (Data) - Retrieves desired users banner picture.
+    - **`bannersv`** (Data) - Retrieves server banner.
+    - **`patlat`** (Fun) - Sends an ASCII image of trollface.
+    - **`amogus`** (Fun) - Sends an NSFW ASCII image of among us.
+    - **`zar`** (Fun) - Sends an integer between 1-(Desired Number).
+    - **`birlestir`** (Fun) - Sends a random word combined from given words.
+    - **`kaçcm`** (Fun) - Sends a random integer between 5-25.
+    - **`slap`** (Fun) - Sends an anime themed slap gif.
+    - **`kiss`** (Fun) - Sends an anime themed kiss gif.
+    - **`hug`** (Fun) - Sends an anime themed hug gif.
+    - **`plaka`** (Info) - Returns desired city's plate number vice versa.
+    - **`boy`** (Info) - Returns given height.
+    - **`duyuru`** (Info) - Returns a specific event.
+    - **`özet-olay`** (Info) - Returns a specific event.
+    - **`ban`** (Admin) - Bans user.
+    - **`temizle`** (Admin) - Clears last X messages from chat.
+    """)
+
 #### "/" Commands
 
 # Bans User
