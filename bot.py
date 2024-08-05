@@ -454,7 +454,7 @@ async def hug(ctx, member: discord.Member):
 # Sends "No" gif.
 @bot.command
 async def zaza(ctx):
-    await ctx.send(f"https://images-ext-1.discordapp.net/external/DRTyuoBEBwQ4YWzbCTeDLmcRsucaXsHOqfYuRaMEcPQ/https/media.tenor.com/2Ul6wnYDfBsAAAPo/byuntear-meme.mp4")
+    await ctx.send("https://images-ext-1.discordapp.net/external/DRTyuoBEBwQ4YWzbCTeDLmcRsucaXsHOqfYuRaMEcPQ/https/media.tenor.com/2Ul6wnYDfBsAAAPo/byuntear-meme.mp4")
 
 # Sends active command list.
 @bot.command()
@@ -483,28 +483,6 @@ async def commands(ctx):
 - *`ban`* (Admin) - Bans user.
 - *`temizle`* (Admin) - Clears last X messages from chat."""
 )   
-
-    # await ctx.send(
-    # """>>> # ! Commands
-    # - *`avatar`* - Retrieves desired users profile picture.
-    # - *`avatarsv`* - Retrieves server icon.
-    # - *`banner`* - Retrieves desired users banner picture.
-    # - *`bannersv`* - Retrieves server banner.
-    # - *`patlat`* - Sends an ASCII image of trollface.
-    # - *`amogus`* - Sends an NSFW ASCII image of among us.
-    # - *`zar`* - Sends an integer between 1-(Desired Number).
-    # - *`birlestir`* - Sends a random word combined from given words.
-    # - *`kaçcm`* - Sends a random integer between 5-25.
-    # - *`slap`* - Sends an anime themed slap gif.
-    # - *`kiss`* - Sends an anime themed kiss gif.
-    # - *`hug`* - Sends an anime themed hug gif.
-    # - *`plaka`* - Returns desired city's plate number vice versa.
-    # - *`boy`* - Returns given height.
-    # - *`duyuru`* - Returns a specific event.
-    # - *`özet-olay`* - Returns a specific event.\n
-    # # / Commands
-    # - *`ban`* (Admin) - Bans user.
-    # - *`temizle`* (Admin) - Clears last X messages from chat.""")
 
 #### "/" Commands
 
