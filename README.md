@@ -14,7 +14,7 @@
 | slap       | Fun      | ! Command  | Sends an anime themed slap gif.                |
 | kiss       | Fun      | ! Command  | Sends an anime themed kiss gif.                |
 | hug        | Fun      | ! Command  | Sends an anime themed hug gif.                 |
-| zaza       | Fun      | ! Command  | Sends a "No" gif.                              |
+| zaza       | Fun      | ! Command  | Sends an angry "no" gif.                       |
 | plaka      | Info     | ! Command  | Returns desired city's plate number vice versa.|
 | boy        | Info     | ! Command  | Returns given height.                          |
 | duyuru     | Info     | ! Command  | Returns a specific event.                      |

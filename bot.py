@@ -478,7 +478,7 @@ async def commands(ctx):
 - *`boy`* - Returns given height.
 - *`duyuru`* - Returns a specific event.
 - *`özet-olay`* - Returns a specific event.
-- *`zaza`* - Returns "No" gif.
+- *`zaza`* - Returns an angry "no" gif.
 # / Commands
 - *`ban`* (Admin) - Bans user.
 - *`temizle`* (Admin) - Clears last X messages from chat."""
