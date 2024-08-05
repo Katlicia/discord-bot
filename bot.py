@@ -470,7 +470,7 @@ async def commands(ctx):
     - *`boy`* - Returns given height.
     - *`duyuru`* - Returns a specific event.
     - *`özet-olay`* - Returns a specific event.
-    # / Commands
+    >>> # / Commands
     - *`ban`* - Bans user.
     - *`temizle`* - Clears last X messages from chat.""")
 
