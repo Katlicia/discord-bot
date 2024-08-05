@@ -13,10 +13,12 @@
 | kaçcm      | Fun      | ! Command  | Sends a random integer between 5-25.           |
 | slap       | Fun      | ! Command  | Sends an anime themed slap gif.                |
 | kiss       | Fun      | ! Command  | Sends an anime themed kiss gif.                |
-| hug        | Fun      | ! Command  | Sens an anime themed hug gif.                  |
+| hug        | Fun      | ! Command  | Sends an anime themed hug gif.                 |
+| zaza       | Fun      | ! Command  | Sends a "No" gif.                              |
 | plaka      | Info     | ! Command  | Returns desired city's plate number vice versa.|
 | boy        | Info     | ! Command  | Returns given height.                          |
 | duyuru     | Info     | ! Command  | Returns a specific event.                      |
 | özet-olay  | Info     | ! Command  | Returns a specific event.                      |
+| commands   | Info     | ! Command  | Returns command list.                          |
 | ban        | Admin    | / Command  | Bans user.                                     |
 | temizle    | Admin    | / Command  | Clears last X messages from chat.              |
