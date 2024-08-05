@@ -185,7 +185,7 @@ async def zar(ctx, num: int):
         roll = random.randint(1, num)
         await ctx.send(roll)
     else:
-        await ctx.send("Geçersiz sayı!")
+        await ctx.send("Invalid number!")
 
 @bot.command()
 async def boy(ctx, height: int):
@@ -215,7 +215,7 @@ async def avatarsv(ctx):
         icon_url = server.icon.url
         await ctx.send(icon_url)
     else:
-        await ctx.send("Resim yok.")
+        await ctx.send("Image not found.")
 
 
 # Sends banner of server.
@@ -226,7 +226,7 @@ async def bannersv(ctx):
         banner_url = server.banner.url
         await ctx.send(banner_url)
     else:
-        await ctx.send("Banner yok.")
+        await ctx.send("Banner not found.")
 
 # Sends banner of member.
 @bot.command()
@@ -234,7 +234,7 @@ async def banner(ctx, member: discord.Member = None):
     if member is None:
         member = ctx.author
     user = await bot.fetch_user(member.id)
-    banner_url = user.banner.url if user.banner else "Banner yok."
+    banner_url = user.banner.url if user.banner else "Banner not found."
     await ctx.send(f"{banner_url}")
 
 
@@ -263,7 +263,7 @@ cities = [
     ('81', 'Düzce')
 ]
 
-# Finds city name by plate vice versa.
+# Finds city name by plate vice versa. (Turkiye only.)
 @bot.command()
 async def plaka(ctx, city: str):
     found = False
@@ -290,7 +290,7 @@ async def plaka(ctx, city: str):
 @bot.command()
 async def birlestir(ctx, *args):
     if not args:
-        await ctx.send("En az bir kelime ekle")
+        await ctx.send("Add at least one word.")
         return
     def get_random_letter(word):
         word_len = len(word)
@@ -353,9 +353,9 @@ async def slap(ctx, member: discord.Member):
             
             await ctx.send(f"{ctx.author.mention} tokat attı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
         else:
-            await ctx.send("GIF bulunamadı.")
+            await ctx.send("No GIF available.")
     else:
-        await ctx.send("API'den veri çekilemedi.")
+        await ctx.send("Can't access to API.")
 
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
 sent_kiss_gifs = set()
@@ -399,9 +399,9 @@ async def kiss(ctx, member: discord.Member):
             
             await ctx.send(f"{ctx.author.mention} öptü {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
         else:
-            await ctx.send("GIF bulunamadı.")
+            await ctx.send("No GIF available.")
     else:
-        await ctx.send("API'den veri çekilemedi.")
+        await ctx.send("Can't access to API.")
 
 
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
@@ -446,9 +446,9 @@ async def hug(ctx, member: discord.Member):
             
             await ctx.send(f"{ctx.author.mention} sarıldı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
         else:
-            await ctx.send("GIF bulunamadı.")
+            await ctx.send("No GIF available.")
     else:
-        await ctx.send("API'den veri çekilemedi.")
+        await ctx.send("Can't access to API.")
 
 
 # Sends "No" gif.
@@ -491,30 +491,30 @@ async def commands(ctx):
 async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
     try:
         await member.ban(reason=reason)
-        await interaction.response.send_message(f"{member.name} banlandı. Sebep: {reason}", ephemeral=True, delete_after=5)
+        await interaction.response.send_message(f"{member.name} is banned. Reason: {reason}", ephemeral=True, delete_after=5)
     except Exception as e:
-        await interaction.response.send_message(f"Bir hata oluştu: {str(e)}", ephemeral=True, delete_after=5)
+        await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
 
 # If user doesn't have the permission to ban show error to only user.
 @ban.error
 async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral=True, delete_after=5)
+        await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
 
 # Removes Messages
-@bot.tree.command(name="temizle", description="Belirli sayıda mesajı sil")
+@bot.tree.command(name="temizle", description="Remove last X messages.")
 @app_commands.checks.has_permissions(manage_messages=True)
 async def temizle(interaction: discord.Interaction, amount: int):
     if amount > 0:
         deleted = await interaction.channel.purge(limit=amount)
-        await interaction.response.send_message(f"{len(deleted)} mesaj başarıyla silindi.", ephemeral=True, delete_after=5)
+        await interaction.response.send_message(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after=5)
     else:
-        await interaction.response.send_message("Geçersiz sayı.", ephemeral=True, delete_after=5)
+        await interaction.response.send_message("Invalid number.", ephemeral=True, delete_after=5)
 
 # If user doesn't have the permission to remove messages show error to only user.
 @temizle.error
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("Bu komutu kullanmak için gerekli olan izne sahip değilsiniz.", ephemeral=True, delete_after=5)
+        await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
 
 bot.run(TOKEN)
