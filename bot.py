@@ -452,7 +452,7 @@ async def hug(ctx, member: discord.Member):
 
 
 # Sends "No" gif.
-@bot.command
+@bot.command()
 async def zaza(ctx):
     await ctx.send("https://images-ext-1.discordapp.net/external/DRTyuoBEBwQ4YWzbCTeDLmcRsucaXsHOqfYuRaMEcPQ/https/media.tenor.com/2Ul6wnYDfBsAAAPo/byuntear-meme.mp4")
 
