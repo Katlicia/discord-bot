@@ -204,6 +204,27 @@ async def avatar(ctx, member: discord.Member = None):
         avatar_url = member.default_avatar
     await ctx.send(f"{avatar_url}")
 
+# Sends avatar of server.
+@bot.command()
+async def avatarsv(ctx):
+    server = ctx.guild
+    if server.icon:
+        icon_url = server.icon.url
+        await ctx.send(icon_url)
+    else:
+        await ctx.send("Resim yok.")
+
+
+# Sends banner of server.
+@bot.command()
+async def bannersv(ctx):
+    server = ctx.guild
+    if server.banner:
+        banner_url = server.banner.url
+        await ctx.send(banner_url)
+    else:
+        await ctx.send("Banner yok.")
+
 # Sends banner of member.
 @bot.command()
 async def banner(ctx, member: discord.Member = None):
@@ -212,6 +233,7 @@ async def banner(ctx, member: discord.Member = None):
     user = await bot.fetch_user(member.id)
     banner_url = user.banner.url if user.banner else "Banner yok."
     await ctx.send(f"{banner_url}")
+
 
 
 cities = [
