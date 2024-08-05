@@ -10,13 +10,16 @@ from discord import app_commands
 import pytz
 import re
 from strings import *
+import requests
+import json
 
 load_dotenv()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
+TENOR_TOKEN = os.getenv("TENOR_TOKEN")
 
 intents = discord.Intents.default()
-intents.members = True  # Üye verilerine erişmek için gerekli
+intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -307,6 +310,145 @@ async def birlestir(ctx, *args):
         letters.append(get_random_letter(word))
     combined_word = "".join(letters)
     await ctx.send(combined_word)
+
+# Sent gifs are stored in sent_gifs set so same gif is not sent twice.
+sent_slap_gifs = set()
+
+# Sends an anime themed slap gif.
+@bot.command()
+async def slap(ctx, member: discord.Member):
+    ckey = "my_test_app"
+    lmt = 50
+    search_term = "anime slap"  
+    url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
+    
+    if len(sent_slap_gifs) >= 50:
+        sent_slap_gifs.clear()
+
+    response = requests.get(url)
+    if response.status_code == 200:
+        top_gifs = json.loads(response.content)
+        
+        gifs = top_gifs.get('results', [])
+        
+        # GIF URL'lerini topla
+        gif_urls = []
+        gif_ids = []
+        for gif in gifs:
+            gif_id = gif.get('id')
+            media_formats = gif.get('media_formats', {})
+            gif_url = media_formats.get('gif', {}).get('url')
+            if gif_url and gif_id not in sent_slap_gifs:
+                gif_urls.append(gif_url)
+                gif_ids.append(gif_id)
+        
+        if gif_urls:
+            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            chosen_index = random.randint(0, len(gif_urls) - 1)
+            chosen_gif = gif_urls[chosen_index]
+            chosen_gif_id = gif_ids[chosen_index]
+            
+            # Gönderilen GIF'leri sakla
+            sent_slap_gifs.add(chosen_gif_id)
+            
+            await ctx.send(f"{ctx.author.mention} tokat attı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+        else:
+            await ctx.send("GIF bulunamadı.")
+    else:
+        await ctx.send("API'den veri çekilemedi.")
+
+# Sent gifs are stored in sent_gifs set so same gif is not sent twice.
+sent_kiss_gifs = set()
+
+# Sends an anime themed kiss gif. 
+@bot.command()
+async def kiss(ctx, member: discord.Member):
+    ckey = "my_test_app"
+    lmt = 50
+    search_term = "anime kiss"  
+    url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
+    
+    if len(sent_kiss_gifs) >= 50:
+        sent_kiss_gifs.clear()
+
+    response = requests.get(url)
+    if response.status_code == 200:
+        top_gifs = json.loads(response.content)
+        
+        gifs = top_gifs.get('results', [])
+        
+        # GIF URL'lerini topla
+        gif_urls = []
+        gif_ids = []
+        for gif in gifs:
+            gif_id = gif.get('id')
+            media_formats = gif.get('media_formats', {})
+            gif_url = media_formats.get('gif', {}).get('url')
+            if gif_url and gif_id not in sent_kiss_gifs:
+                gif_urls.append(gif_url)
+                gif_ids.append(gif_id)
+        
+        if gif_urls:
+            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            chosen_index = random.randint(0, len(gif_urls) - 1)
+            chosen_gif = gif_urls[chosen_index]
+            chosen_gif_id = gif_ids[chosen_index]
+            
+            # Gönderilen GIF'leri sakla
+            sent_kiss_gifs.add(chosen_gif_id)
+            
+            await ctx.send(f"{ctx.author.mention} öptü {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+        else:
+            await ctx.send("GIF bulunamadı.")
+    else:
+        await ctx.send("API'den veri çekilemedi.")
+
+
+# Sent gifs are stored in sent_gifs set so same gif is not sent twice.
+sent_hug_gifs = set()
+
+# Sends an anime themed hug gif.
+@bot.command()
+async def hug(ctx, member: discord.Member):
+    ckey = "my_test_app"
+    lmt = 50
+    search_term = "anime hug"  
+    url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
+    
+    if len(sent_hug_gifs) >= 50:
+        sent_hug_gifs.clear()
+
+    response = requests.get(url)
+    if response.status_code == 200:
+        top_gifs = json.loads(response.content)
+        
+        gifs = top_gifs.get('results', [])
+        
+        # GIF URL'lerini topla
+        gif_urls = []
+        gif_ids = []
+        for gif in gifs:
+            gif_id = gif.get('id')
+            media_formats = gif.get('media_formats', {})
+            gif_url = media_formats.get('gif', {}).get('url')
+            if gif_url and gif_id not in sent_hug_gifs:
+                gif_urls.append(gif_url)
+                gif_ids.append(gif_id)
+        
+        if gif_urls:
+            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            chosen_index = random.randint(0, len(gif_urls) - 1)
+            chosen_gif = gif_urls[chosen_index]
+            chosen_gif_id = gif_ids[chosen_index]
+            
+            # Gönderilen GIF'leri sakla
+            sent_hug_gifs.add(chosen_gif_id)
+            
+            await ctx.send(f"{ctx.author.mention} sarıldı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+        else:
+            await ctx.send("GIF bulunamadı.")
+    else:
+        await ctx.send("API'den veri çekilemedi.")
 
 #### "/" Commands
 

@@ -5,7 +5,7 @@
 | avatar     | Data     | ! Command  | Retrieves desired users profile picture.       |
 | avatarsv   | Data     | ! Command  | Retrieves server icon.                         |
 | banner     | Data     | ! Command  | Retrieves desired users banner picture.        |
-| bannersv   | Data     | | Command  | Retrieves server banner.                       |
+| bannersv   | Data     | ! Command  | Retrieves server banner.                       |
 | patlat     | Fun      | ! Command  | Sends an ASCII image of trollface.             |
 | amogus     | Fun      | ! Command  | Sends an NSFW ASCII image of among us.         |
 | zar        | Fun      | ! Command  | Sends an integer between 1-(Desired Number)    |
