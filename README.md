@@ -15,3 +15,5 @@
 | boy        | Info     | ! Command  | Returns given height.                          |
 | duyuru     | Info     | ! Command  | Returns a specific event.                      |
 | özet-olay  | Info     | ! Command  | Returns a specific event.                      |
+| ban        | Admin    | / Command  | Bans user.                                     |
+| temizle    | Admin    | / Command  | Clears last X messages from chat.              |
