@@ -454,7 +454,7 @@ async def hug(ctx, member: discord.Member):
 # Sends "No" gif.
 @bot.command()
 async def zaza(ctx):
-    await ctx.send("https://images-ext-1.discordapp.net/external/DRTyuoBEBwQ4YWzbCTeDLmcRsucaXsHOqfYuRaMEcPQ/https/media.tenor.com/2Ul6wnYDfBsAAAPo/byuntear-meme.mp4")
+    await ctx.send("https://media.discordapp.net/attachments/1077907619630546994/1270005477387796530/angry.gif?ex=66b22045&is=66b0cec5&hm=0be0ee514b1661a6a2cb922cdee63009ee88eb667c673fe8cffad1d16f81615b&=")
 
 # Sends active command list.
 @bot.command()
