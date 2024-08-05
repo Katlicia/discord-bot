@@ -452,8 +452,7 @@ async def hug(ctx, member: discord.Member):
 
 @bot.command()
 async def commands(ctx):
-    await ctx.send(
-        """# ! Commands
+    comand  = """# ! Commands
         - `avatar` - Retrieves desired users profile picture.
         - `avatarsv` - Retrieves server icon.
         - `banner` - Retrieves desired users banner picture.
@@ -469,13 +468,10 @@ async def commands(ctx):
         - `plaka` - Returns desired city's plate number vice versa.
         - `boy` - Returns given height.
         - `duyuru` - Returns a specific event.
-        - `özet-olay` - Returns a specific event.
-
-        # / Commands
+        - `özet-olay` - Returns a specific event. """ + """ # / Commands
         - `ban` - Bans user.
-        - `temizle` - Clears last X messages from chat.
-        """
-    )
+        - `temizle` - Clears last X messages from chat."""
+    await ctx.send(comand)
 
 
 #### "/" Commands
