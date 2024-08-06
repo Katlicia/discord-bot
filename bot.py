@@ -488,20 +488,21 @@ async def commands(ctx):
 
 #### "/" Commands
 
-# # Bans User
-# @bot.tree.command(name="ban", description="Ban User")
-# async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
-#     try:
-#         await member.ban(reason=reason)
-#         await interaction.response.send_message(f"{member.name} is banned. Reason: {reason}", ephemeral=True, delete_after=5)
-#     except Exception as e:
-#         await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
+# Bans User
+@bot.tree.command(name="ban", description="Ban User")
+@app_commands.checks.has_permissions(ban_members=True)
+async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
+    try:
+        await member.ban(reason=reason)
+        await interaction.response.send_message(f"{member.name} is banned. Reason: {reason}", ephemeral=True, delete_after=5)
+    except Exception as e:
+        await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
 
-# # If user doesn't have the permission to ban show error to only user.
-# @ban.error
-# async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-#     if isinstance(error, app_commands.CheckFailure):
-#         await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
+# Error handler for permission errors
+@ban.error
+async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    if isinstance(error, app_commands.CheckFailure):
+        await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True, delete_after=5)
 
 # Removes Messages
 @bot.tree.command(name="temizle", description="Remove last X messages.")
@@ -509,14 +510,18 @@ async def commands(ctx):
 async def temizle(interaction: discord.Interaction, amount: int):
     if amount > 0:
         deleted = await interaction.channel.purge(limit=amount)
-        await interaction.response.send_message(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after=5)
+        if not interaction.response.is_done():
+            await interaction.response.send_message(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after=5)
     else:
-        await interaction.response.send_message("Invalid number.", ephemeral=True, delete_after=5)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Invalid number.", ephemeral=True, delete_after=5)
 
 # If user doesn't have the permission to remove messages show error to only user.
 @temizle.error
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
+
 
 bot.run(TOKEN)
