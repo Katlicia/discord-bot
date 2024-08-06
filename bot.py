@@ -2,7 +2,6 @@ import os
 import discord
 import random
 import asyncio
-import sqlite3
 from datetime import datetime, timedelta
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -322,6 +321,7 @@ async def slap(ctx, member: discord.Member):
     search_term = "anime slap"  
     url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
     
+    # If set length is greater than limit clear the set.
     if len(sent_slap_gifs) >= 50:
         sent_slap_gifs.clear()
 
@@ -368,6 +368,7 @@ async def kiss(ctx, member: discord.Member):
     search_term = "anime kiss"  
     url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
     
+    # If set length is greater than limit clear the set.
     if len(sent_kiss_gifs) >= 50:
         sent_kiss_gifs.clear()
 
@@ -415,6 +416,7 @@ async def hug(ctx, member: discord.Member):
     search_term = "anime hug"  
     url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
     
+    # If set length is greater than limit clear the set.
     if len(sent_hug_gifs) >= 50:
         sent_hug_gifs.clear()
 
@@ -480,26 +482,26 @@ async def commands(ctx):
 - *`özet-olay`* - Returns a specific event.
 - *`zaza`* - Returns an angry "no" gif.
 # / Commands
-- *`ban`* (Admin) - Bans user.
+- *`ban`* (Admin) - Bans user. (Currently not available.)
 - *`temizle`* (Admin) - Clears last X messages from chat."""
 )   
 
 #### "/" Commands
 
-# Bans User
-@bot.tree.command(name="ban", description="Ban User")
-async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
-    try:
-        await member.ban(reason=reason)
-        await interaction.response.send_message(f"{member.name} is banned. Reason: {reason}", ephemeral=True, delete_after=5)
-    except Exception as e:
-        await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
+# # Bans User
+# @bot.tree.command(name="ban", description="Ban User")
+# async def ban(interaction: discord.Interaction, member: discord.Member, reason: str = None):
+#     try:
+#         await member.ban(reason=reason)
+#         await interaction.response.send_message(f"{member.name} is banned. Reason: {reason}", ephemeral=True, delete_after=5)
+#     except Exception as e:
+#         await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
 
-# If user doesn't have the permission to ban show error to only user.
-@ban.error
-async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-    if isinstance(error, app_commands.CheckFailure):
-        await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
+# # If user doesn't have the permission to ban show error to only user.
+# @ban.error
+# async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+#     if isinstance(error, app_commands.CheckFailure):
+#         await interaction.response.send_message("You can't use this command.", ephemeral=True, delete_after=5)
 
 # Removes Messages
 @bot.tree.command(name="temizle", description="Remove last X messages.")
