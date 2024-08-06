@@ -508,18 +508,19 @@ async def ban_error(interaction: discord.Interaction, error: app_commands.AppCom
 @bot.tree.command(name="temizle", description="Remove last X messages.")
 @app_commands.checks.has_permissions(manage_messages=True)
 async def temizle(interaction: discord.Interaction, amount: int):
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=True)  # Interaction'ı defer et
     if amount > 0:
         deleted = await interaction.channel.purge(limit=amount)
-        await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after=5)
+        await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True)
     else:
-        await interaction.followup.send("Invalid number.", ephemeral=True, delete_after=5)
+        await interaction.followup.send("Invalid number.", ephemeral=True)
 
 # If user doesn't have the permission to remove messages show error to only user.
 @temizle.error
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
-        await interaction.followup.send("You can't use this command.", ephemeral=True, delete_after=5)
+        await interaction.followup.send("You can't use this command.", ephemeral=True)
+
 
 
 
