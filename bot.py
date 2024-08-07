@@ -398,7 +398,7 @@ async def kiss(ctx, member: discord.Member):
             # Gönderilen GIF'leri sakla
             sent_kiss_gifs.add(chosen_gif_id)
             
-            embed = discord.Embed(description=f"{ctx.author.mention} {member.mention} kişisini öptü!")
+            embed = discord.Embed(description=f">>>**{ctx.author.mention} {member.mention} kişisini öptü!**")
             embed.set_image(url=gif_url)
             await ctx.send(embed=embed)
         else:
