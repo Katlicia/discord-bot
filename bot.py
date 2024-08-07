@@ -23,6 +23,7 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+
 random_messages = [
     "AMİNAKEEEEE",
     "neco bumblebee olsam beni yine de sever miydin la",
@@ -46,6 +47,7 @@ async def send_random_messages():
             message = random.choice(random_messages)
             await channel.send(message)
 
+
 @tasks.loop(hours=10)
 async def birthday_message():
     channel = bot.get_channel(1077904975902019676)
@@ -59,9 +61,11 @@ async def birthday_message():
         member_mentions = ", ".join([member.mention for member in members_with_role])
         await channel.send(f"Doğum günün kutlu olsun {member_mentions}")
 
+
 @birthday_message.before_loop
 async def before_birthday_message():
     await bot.wait_until_ready()
+
 
 # 31 Text Control
 def is_pure_text(content):
@@ -75,7 +79,8 @@ def is_pure_text(content):
 
     return "31" in content
 
-# İbo Control
+
+# Ibo Control
 def is_pure_text2(content):
     url_pattern = r'(https?://\S+|www\.\S+)'  # URL
     mention_pattern = r'(<@!?&?\d+>)'  # Mentions
@@ -100,6 +105,7 @@ async def send_goodmorning_message():
         if channel is not None:
             await channel.send("gunaydin gencolar")
 
+
 @bot.event
 async def on_ready():
     print(f"Bot {bot.user.name} olarak giriş yaptı.")
@@ -113,6 +119,7 @@ async def on_ready():
     bot.loop.create_task(send_goodmorning_message())
     #bot.loop.create_task(daily_mention())
     birthday_message.start()
+
 
 @bot.event
 async def on_message(message):
@@ -128,6 +135,7 @@ async def on_message(message):
         if message.content.lower() == "kufredecem":
             await message.channel.send("amcik")
     await bot.process_commands(message)
+
 
 async def daily_mention():
     await bot.wait_until_ready()
@@ -178,6 +186,7 @@ async def kaçcm(ctx):
     cm = random.randint(5, 25)
     await ctx.send(f"{cm} cm \n{'8' + '=' * cm + 'D'}")
 
+
 @bot.command()
 async def zar(ctx, num: int):
     if num >= 1:
@@ -185,6 +194,7 @@ async def zar(ctx, num: int):
         await ctx.send(roll)
     else:
         await ctx.send("Invalid number!")
+
 
 @bot.command()
 async def boy(ctx, height: int):
@@ -194,6 +204,7 @@ async def boy(ctx, height: int):
         await ctx.send("?")
     else:
         await ctx.send(f"Boyunuz {height} cm.")
+
 
 # Sends avatar of member.
 @bot.command()
@@ -205,6 +216,7 @@ async def avatar(ctx, member: discord.Member = None):
     else:
         avatar_url = member.default_avatar
     await ctx.send(f"{avatar_url}")
+
 
 # Sends avatar of server.
 @bot.command()
@@ -226,6 +238,7 @@ async def bannersv(ctx):
         await ctx.send(banner_url)
     else:
         await ctx.send("Banner not found.")
+
 
 # Sends banner of member.
 @bot.command()
@@ -310,10 +323,10 @@ async def birlestir(ctx, *args):
     combined_word = "".join(letters)
     await ctx.send(combined_word)
 
-# Sent gifs are stored in sent_gifs set so same gif is not sent twice.
-sent_slap_gifs = set()
 
+# Sent gifs are stored in sent_gifs set so same gif is not sent twice.
 # Sends an anime themed slap gif.
+sent_slap_gifs = set()
 @bot.command()
 async def slap(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -331,7 +344,7 @@ async def slap(ctx, member: discord.Member):
         
         gifs = top_gifs.get('results', [])
         
-        # GIF URL'lerini topla
+        # Save GIF's.
         gif_urls = []
         gif_ids = []
         for gif in gifs:
@@ -343,34 +356,27 @@ async def slap(ctx, member: discord.Member):
                 gif_ids.append(gif_id)
         
         if gif_urls:
-            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            # If GIF is sent generate new GIF.
             chosen_index = random.randint(0, len(gif_urls) - 1)
             chosen_gif = gif_urls[chosen_index]
             chosen_gif_id = gif_ids[chosen_index]
             
-            # Gönderilen GIF'leri sakla
+            # Save sent GIF's.
             sent_slap_gifs.add(chosen_gif_id)
-            
-            await ctx.send(f"{ctx.author.mention} tokat attı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+            embed = discord.Embed(description=f"")
+            embed.set_image(url=chosen_gif)
+            embed.set_author(name=f"{ctx.author.display_name} slaps {member.display_name}!", icon_url=ctx.author.avatar.url)
+            embed.color = discord.Color.blue()  # This adds the blue line to the embed
+            await ctx.send(embed=embed)
         else:
             await ctx.send("No GIF available.")
     else:
         await ctx.send("Can't access to API.")
 
+
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
+# Sends an anime themed kiss gif.
 sent_kiss_gifs = set()
-
-import discord
-from discord.ext import commands
-import requests
-import json
-import random
-
-bot = commands.Bot(command_prefix="!")
-
-TENOR_TOKEN = "YOUR_TENOR_API_TOKEN"
-sent_kiss_gifs = set()
-
 @bot.command()
 async def kiss(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -388,7 +394,7 @@ async def kiss(ctx, member: discord.Member):
         
         gifs = top_gifs.get('results', [])
         
-        # GIF URL'lerini topla
+        # Save GIF's.
         gif_urls = []
         gif_ids = []
         for gif in gifs:
@@ -400,17 +406,17 @@ async def kiss(ctx, member: discord.Member):
                 gif_ids.append(gif_id)
         
         if gif_urls:
-            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            # If GIF is sent generate new GIF.
             chosen_index = random.randint(0, len(gif_urls) - 1)
             chosen_gif = gif_urls[chosen_index]
             chosen_gif_id = gif_ids[chosen_index]
             
-            # Gönderilen GIF'leri sakla
+            # Save sent GIF's.
             sent_kiss_gifs.add(chosen_gif_id)
             
-            embed = discord.Embed(description=f"{ctx.author.display_name} kisses {member.display_name}")
+            embed = discord.Embed(description=f"")
             embed.set_image(url=chosen_gif)
-            embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
+            embed.set_author(name=f"{ctx.author.display_name} kisses {member.display_name}!", icon_url=ctx.author.avatar.url)
             embed.color = discord.Color.blue()  # This adds the blue line to the embed
             await ctx.send(embed=embed)
         else:
@@ -418,61 +424,10 @@ async def kiss(ctx, member: discord.Member):
     else:
         await ctx.send("Can't access the API.")
 
-bot.run("YOUR_DISCORD_BOT_TOKEN")
-
-
-
-# # Sends an anime themed kiss gif. 
-# @bot.command()
-# async def kiss(ctx, member: discord.Member):
-#     ckey = "my_test_app"
-#     lmt = 50
-#     search_term = "anime kiss"  
-#     url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
-    
-#     # If set length is greater than limit clear the set.
-#     if len(sent_kiss_gifs) >= 50:
-#         sent_kiss_gifs.clear()
-
-#     response = requests.get(url)
-#     if response.status_code == 200:
-#         top_gifs = json.loads(response.content)
-        
-#         gifs = top_gifs.get('results', [])
-        
-#         # GIF URL'lerini topla
-#         gif_urls = []
-#         gif_ids = []
-#         for gif in gifs:
-#             gif_id = gif.get('id')
-#             media_formats = gif.get('media_formats', {})
-#             gif_url = media_formats.get('gif', {}).get('url')
-#             if gif_url and gif_id not in sent_kiss_gifs:
-#                 gif_urls.append(gif_url)
-#                 gif_ids.append(gif_id)
-        
-#         if gif_urls:
-#             # Önceki GIF'leri kontrol et ve yeni bir GIF seç
-#             chosen_index = random.randint(0, len(gif_urls) - 1)
-#             chosen_gif = gif_urls[chosen_index]
-#             chosen_gif_id = gif_ids[chosen_index]
-            
-#             # Gönderilen GIF'leri sakla
-#             sent_kiss_gifs.add(chosen_gif_id)
-            
-#             embed = discord.Embed(description=f">>> **{ctx.author.mention} {member.mention} kişisini öptü!**")
-#             embed.set_image(url=gif_url)
-#             await ctx.send(embed=embed)
-#         else:
-#             await ctx.send("No GIF available.")
-#     else:
-#         await ctx.send("Can't access to API.")
-
 
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
-sent_hug_gifs = set()
-
 # Sends an anime themed hug gif.
+sent_hug_gifs = set()
 @bot.command()
 async def hug(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -490,7 +445,7 @@ async def hug(ctx, member: discord.Member):
         
         gifs = top_gifs.get('results', [])
         
-        # GIF URL'lerini topla
+        # Save GIF's.
         gif_urls = []
         gif_ids = []
         for gif in gifs:
@@ -502,15 +457,19 @@ async def hug(ctx, member: discord.Member):
                 gif_ids.append(gif_id)
         
         if gif_urls:
-            # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+            # If GIF is sent generate new GIF.
             chosen_index = random.randint(0, len(gif_urls) - 1)
             chosen_gif = gif_urls[chosen_index]
             chosen_gif_id = gif_ids[chosen_index]
             
-            # Gönderilen GIF'leri sakla
+            # Save sent GIF's.
             sent_hug_gifs.add(chosen_gif_id)
-            
-            await ctx.send(f"{ctx.author.mention} sarıldı {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+
+            embed = discord.Embed(description=f"")
+            embed.set_image(url=chosen_gif)
+            embed.set_author(name=f"{ctx.author.display_name} hugs {member.display_name}!", icon_url=ctx.author.avatar.url)
+            embed.color = discord.Color.blue()  # This adds the blue line to the embed
+            await ctx.send(embed=embed)
         else:
             await ctx.send("No GIF available.")
     else:
@@ -521,6 +480,7 @@ async def hug(ctx, member: discord.Member):
 @bot.command()
 async def zaza(ctx):
     await ctx.send("https://media.discordapp.net/attachments/1077907619630546994/1270005477387796530/angry.gif?ex=66b22045&is=66b0cec5&hm=0be0ee514b1661a6a2cb922cdee63009ee88eb667c673fe8cffad1d16f81615b&=")
+
 
 # Sends active command list.
 @bot.command()
@@ -549,6 +509,7 @@ async def commands(ctx):
 - *`ban`* (Admin) - Bans user.
 - *`temizle`* (Admin) - Clears last X messages from chat."""
 )   
+
 
 #### "/" Commands
 
