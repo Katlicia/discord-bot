@@ -360,6 +360,17 @@ async def slap(ctx, member: discord.Member):
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
 sent_kiss_gifs = set()
 
+import discord
+from discord.ext import commands
+import requests
+import json
+import random
+
+bot = commands.Bot(command_prefix="!")
+
+TENOR_TOKEN = "YOUR_TENOR_API_TOKEN"
+sent_kiss_gifs = set()
+
 @bot.command()
 async def kiss(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -397,15 +408,18 @@ async def kiss(ctx, member: discord.Member):
             # Gönderilen GIF'leri sakla
             sent_kiss_gifs.add(chosen_gif_id)
             
-            embed = discord.Embed(description=f"**{ctx.author.display_name} kisses {member.display_name}**")
+            embed = discord.Embed(description=f"{ctx.author.display_name} kisses {member.display_name}")
             embed.set_image(url=chosen_gif)
             embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
-            embed.set_footer(text=f"{ctx.author.display_name} kisses {member.display_name}")
+            embed.color = discord.Color.blue()  # This adds the blue line to the embed
             await ctx.send(embed=embed)
         else:
             await ctx.send("No GIF available.")
     else:
-        await ctx.send("Can't access to API.")
+        await ctx.send("Can't access the API.")
+
+bot.run("YOUR_DISCORD_BOT_TOKEN")
+
 
 
 # # Sends an anime themed kiss gif. 
