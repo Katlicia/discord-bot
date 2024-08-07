@@ -360,7 +360,6 @@ async def slap(ctx, member: discord.Member):
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
 sent_kiss_gifs = set()
 
-# Sends an anime themed kiss gif. 
 @bot.command()
 async def kiss(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -398,13 +397,62 @@ async def kiss(ctx, member: discord.Member):
             # Gönderilen GIF'leri sakla
             sent_kiss_gifs.add(chosen_gif_id)
             
-            embed = discord.Embed(description=f">>> **{ctx.author.mention} {member.mention} kişisini öptü!**")
-            embed.set_image(url=gif_url)
+            embed = discord.Embed(description=f"**{ctx.author.display_name} kisses {member.display_name}**")
+            embed.set_image(url=chosen_gif)
+            embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
+            embed.set_footer(text=f"{ctx.author.display_name} kisses {member.display_name}")
             await ctx.send(embed=embed)
         else:
             await ctx.send("No GIF available.")
     else:
         await ctx.send("Can't access to API.")
+
+
+# # Sends an anime themed kiss gif. 
+# @bot.command()
+# async def kiss(ctx, member: discord.Member):
+#     ckey = "my_test_app"
+#     lmt = 50
+#     search_term = "anime kiss"  
+#     url = f"https://tenor.googleapis.com/v2/search?q={search_term}&key={TENOR_TOKEN}&client_key={ckey}&limit={lmt}"
+    
+#     # If set length is greater than limit clear the set.
+#     if len(sent_kiss_gifs) >= 50:
+#         sent_kiss_gifs.clear()
+
+#     response = requests.get(url)
+#     if response.status_code == 200:
+#         top_gifs = json.loads(response.content)
+        
+#         gifs = top_gifs.get('results', [])
+        
+#         # GIF URL'lerini topla
+#         gif_urls = []
+#         gif_ids = []
+#         for gif in gifs:
+#             gif_id = gif.get('id')
+#             media_formats = gif.get('media_formats', {})
+#             gif_url = media_formats.get('gif', {}).get('url')
+#             if gif_url and gif_id not in sent_kiss_gifs:
+#                 gif_urls.append(gif_url)
+#                 gif_ids.append(gif_id)
+        
+#         if gif_urls:
+#             # Önceki GIF'leri kontrol et ve yeni bir GIF seç
+#             chosen_index = random.randint(0, len(gif_urls) - 1)
+#             chosen_gif = gif_urls[chosen_index]
+#             chosen_gif_id = gif_ids[chosen_index]
+            
+#             # Gönderilen GIF'leri sakla
+#             sent_kiss_gifs.add(chosen_gif_id)
+            
+#             embed = discord.Embed(description=f">>> **{ctx.author.mention} {member.mention} kişisini öptü!**")
+#             embed.set_image(url=gif_url)
+#             await ctx.send(embed=embed)
+#         else:
+#             await ctx.send("No GIF available.")
+#     else:
+#         await ctx.send("Can't access to API.")
 
 
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
