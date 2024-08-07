@@ -398,7 +398,9 @@ async def kiss(ctx, member: discord.Member):
             # Gönderilen GIF'leri sakla
             sent_kiss_gifs.add(chosen_gif_id)
             
-            await ctx.send(f"{ctx.author.mention} öptü {member.mention}!", embed=discord.Embed().set_image(url=chosen_gif))
+            embed = discord.Embed(description=f"{ctx.author.mention} {member.mention} kişisini öptü!")
+            embed.set_image(url=gif_url)
+            await ctx.send(embed=embed)
         else:
             await ctx.send("No GIF available.")
     else:
@@ -508,7 +510,7 @@ async def ban_error(interaction: discord.Interaction, error: app_commands.AppCom
 @bot.tree.command(name="temizle", description="Remove last X messages.")
 @app_commands.checks.has_permissions(manage_messages=True)
 async def temizle(interaction: discord.Interaction, amount: int):
-    await interaction.response.defer(ephemeral=True)  # Interaction'ı defer et
+    await interaction.response.defer(ephemeral=True)
     if amount > 0:
         deleted = await interaction.channel.purge(limit=amount)
         await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True)
@@ -520,8 +522,5 @@ async def temizle(interaction: discord.Interaction, amount: int):
 async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
     if isinstance(error, app_commands.CheckFailure):
         await interaction.followup.send("You can't use this command.", ephemeral=True)
-
-
-
 
 bot.run(TOKEN)
