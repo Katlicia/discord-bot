@@ -130,7 +130,7 @@ async def on_message(message):
     if is_pure_text2(message.content):
         await message.reply(":sob: :skull:")
     if message.content.lower() == "sa":
-        await message.channel.send("as")
+        await message.channel.send(cugulus)
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
             await message.channel.send("amcik")
