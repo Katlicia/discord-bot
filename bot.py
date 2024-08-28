@@ -142,7 +142,8 @@ async def on_message(message):
     if message.author.id == 376364290246049822: # author ID
         emmi_liste.append(message.content)
     if len(emmi_liste) == 5:
-        await message.channel.send("\n".join(emmi_liste))
+        emmi_text = "Burak Emmi Chat List:" + "\n".join(emmi_liste) 
+        await message.channel.send(emmi_text)
         emmi_liste.clear()
             
 
