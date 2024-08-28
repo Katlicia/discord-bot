@@ -136,6 +136,16 @@ async def on_message(message):
             await message.channel.send("amcik")
     await bot.process_commands(message)
 
+emmi_liste = []
+@bot.event
+async def on_message(message):
+    if message.author.id == 376364290246049822: # author ID
+        emmi_liste.append(message.content)
+    if len(emmi_liste) == 5:
+        await message.channel.send("\n".join(emmi_liste))
+        emmi_liste.clear()
+            
+
 
 async def daily_mention():
     await bot.wait_until_ready()
