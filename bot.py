@@ -131,13 +131,14 @@ async def on_message(message):
         await message.reply(":sob: :skull:")
     if message.content.lower() == "sa":
         await message.channel.send("as")
+        print("as")
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
             await message.channel.send("amcik")
     await bot.process_commands(message)
 
 emmi_liste = []
-@bot.event
+@bot.event      
 async def on_message(message):
     if message.author.id == 376364290246049822: # author ID
         emmi_liste.append(message.content)
@@ -182,10 +183,6 @@ async def olay(ctx):
 @bot.command()
 async def patlat(ctx):
     await ctx.send(trollface)
-
-@bot.command()
-async def amogus(ctx):
-    await ctx.send(amongus)
 
 @bot.command()
 async def duyuru(ctx):
