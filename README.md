@@ -7,7 +7,6 @@
 | banner     | Data     | ! Command  | Retrieves desired users banner picture.        |
 | bannersv   | Data     | ! Command  | Retrieves server banner.                       |
 | patlat     | Fun      | ! Command  | Sends an ASCII image of trollface.             |
-| amogus     | Fun      | ! Command  | Sends an NSFW ASCII image of among us.         |
 | zar        | Fun      | ! Command  | Sends an integer between 1-(Desired Number)    |
 | birlestir  | Fun      | ! Command  | Sends a random word combined from given words. |
 | kaçcm      | Fun      | ! Command  | Sends a random integer between 5-25.           |

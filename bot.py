@@ -131,7 +131,6 @@ async def on_message(message):
         await message.reply(":sob: :skull:")
     if message.content.lower() == "sa":
         await message.channel.send("as")
-        print("as")
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
             await message.channel.send("amcik")
@@ -324,6 +323,7 @@ async def birlestir(ctx, *args):
 # Sent gifs are stored in sent_gifs set so same gif is not sent twice.
 # Sends an anime themed slap gif.
 sent_slap_gifs = set()
+
 @bot.command()
 async def slap(ctx, member: discord.Member):
     ckey = "my_test_app"
@@ -490,7 +490,6 @@ async def commands(ctx):
 - *`banner`* - Retrieves desired users banner picture.
 - *`bannersv`* - Retrieves server banner.
 - *`patlat`* - Sends an ASCII image of trollface.
-- *`amogus`* - Sends an NSFW ASCII image of among us.
 - *`zar`* - Sends an integer between 1-(Desired Number).
 - *`birlestir`* - Sends a random word combined from given words.
 - *`kaçcm`* - Sends a random integer between 5-25.
