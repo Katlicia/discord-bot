@@ -279,10 +279,7 @@ async def plaka(ctx, city: str):
         plate_num = int(city)
         for plate, name in cities:
             if plate_num == int(plate):
-                if plate_num == 17 or plate_num == 41:
-                    await ctx.send(f"{plate_num} numaralı plaka {name} ilinindir. :flag_tr:")
-                else:
-                    await ctx.send(f"{plate_num} numaralı plaka {name} ilinindir.")
+                await ctx.send(f"{plate_num} numaralı plaka {name} ilinindir.")
                 found = True
                 break
         if not found:
@@ -291,10 +288,7 @@ async def plaka(ctx, city: str):
         city_lower = city.lower()
         for plate, name in cities:
             if city_lower == name.lower():
-                if city_lower == "kocaeli" or city_lower == "çanakkale":
-                    await ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır. :flag_tr:")
-                else:
-                    await ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır.")
+                await ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır.")
                 found = True
                 break
         if not found:
