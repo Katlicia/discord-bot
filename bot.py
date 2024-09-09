@@ -292,7 +292,7 @@ async def plaka(ctx, city: str):
         for plate, name in cities:
             if city_lower == name.lower():
                 if city_lower == "kocaeli" or city_lower == "çanakkale":
-                    ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır. :flag_tr:")
+                    await ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır. :flag_tr:")
                 else:
                     await ctx.send(f"{name.capitalize()} şehrinin plakası {plate}'dır.")
                 found = True
