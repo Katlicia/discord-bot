@@ -498,8 +498,6 @@ async def commands(ctx):
 - *`hug`* - Sends an anime themed hug gif.
 - *`plaka`* - Returns desired city's plate number vice versa.
 - *`boy`* - Returns given height.
-- *`duyuru`* - Returns a specific event.
-- *`özet-olay`* - Returns a specific event.
 - *`zaza`* - Returns an angry "no" gif.
 # / Commands
 - *`ban`* (Admin) - Bans user.
