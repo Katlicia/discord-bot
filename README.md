@@ -16,8 +16,6 @@
 | zaza       | Fun      | ! Command  | Sends an angry "no" gif.                       |
 | plaka      | Info     | ! Command  | Returns desired city's plate number vice versa.|
 | boy        | Info     | ! Command  | Returns given height.                          |
-| duyuru     | Info     | ! Command  | Returns a specific event.                      |
-| özet-olay  | Info     | ! Command  | Returns a specific event.                      |
 | commands   | Info     | ! Command  | Returns command list.                          |
 | ban        | Admin    | / Command  | Bans user.                                     |
 | temizle    | Admin    | / Command  | Clears last X messages from chat.              |
