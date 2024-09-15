@@ -91,6 +91,26 @@ def is_pure_text2(content):
     content = re.sub(emoji_pattern, '', content)
     return "ibo" in content
 
+def is_pure_text3(content):
+    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
+    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
+    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
+
+    content = re.sub(url_pattern, '', content)
+    content = re.sub(mention_pattern, '', content)
+    content = re.sub(emoji_pattern, '', content)
+    return "41" in content
+
+def is_pure_text4(content):
+    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
+    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
+    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
+
+    content = re.sub(url_pattern, '', content)
+    content = re.sub(mention_pattern, '', content)
+    content = re.sub(emoji_pattern, '', content)
+    return "17" in content
+
 async def send_goodmorning_message():
     await bot.wait_until_ready()
     channel = bot.get_channel(CHANNEL_ID)
@@ -129,6 +149,10 @@ async def on_message(message):
         await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF"),
     if is_pure_text2(message.content):
         await message.reply(":sob: :skull:")
+    if is_pure_text3(message.content):
+        await message.reply(":flag_tr:")
+    if is_pure_text4(message.content):
+        await message.reply("flag_tr:")
     if message.content.lower() == "sa":
         await message.channel.send("as")
     if message.author.id == 316608072669986816:  # author ID
