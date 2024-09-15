@@ -23,30 +23,7 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-
-random_messages = [
-    "AMİNAKEEEEE",
-    "neco bumblebee olsam beni yine de sever miydin la",
-    "durum ne ensar",
-    "beyler kendimi turşu yaptım eheeeeeee",
-    "memet sen misin la",
-    "LETS PLAY FOOTBALL",
-    "onları sağamazsın",
-    "kufredecem",
-    "aga eski lol be"
-]
-
 CHANNEL_ID = 1077904975902019676
-
-async def send_random_messages():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(CHANNEL_ID)
-    while not bot.is_closed():
-        await asyncio.sleep(random.randint(18000, 43200))  # 5H-12H
-        if channel is not None:
-            message = random.choice(random_messages)
-            await channel.send(message)
-
 
 @tasks.loop(hours=10)
 async def birthday_message():
@@ -67,8 +44,7 @@ async def before_birthday_message():
     await bot.wait_until_ready()
 
 
-# 31 Text Control
-def is_pure_text(content):
+def check_keyword(content, word):
     url_pattern = r'(https?://\S+|www\.\S+)'  # URL
     mention_pattern = r'(<@!?&?\d+>)'  # Mentions
     emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
@@ -77,39 +53,10 @@ def is_pure_text(content):
     content = re.sub(mention_pattern, '', content)
     content = re.sub(emoji_pattern, '', content)
 
-    return "31" in content
+    pattern = fr'\b{re.escape(word)}\b'
 
-
-# Ibo Control
-def is_pure_text2(content):
-    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
-    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
-    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
-
-    content = re.sub(url_pattern, '', content)
-    content = re.sub(mention_pattern, '', content)
-    content = re.sub(emoji_pattern, '', content)
-    return "ibo" in content
-
-def is_pure_text3(content):
-    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
-    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
-    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
-
-    content = re.sub(url_pattern, '', content)
-    content = re.sub(mention_pattern, '', content)
-    content = re.sub(emoji_pattern, '', content)
-    return "41" in content
-
-def is_pure_text4(content):
-    url_pattern = r'(https?://\S+|www\.\S+)'  # URL
-    mention_pattern = r'(<@!?&?\d+>)'  # Mentions
-    emoji_pattern = r'(<a?:\w+:\d+>)'  # Custom emotes
-
-    content = re.sub(url_pattern, '', content)
-    content = re.sub(mention_pattern, '', content)
-    content = re.sub(emoji_pattern, '', content)
-    return "17" in content
+    # Checks if word is in content.
+    return bool(re.search(pattern, content))
 
 async def send_goodmorning_message():
     await bot.wait_until_ready()
@@ -135,9 +82,7 @@ async def on_ready():
     except Exception as e:
         print(e)
 
-    #bot.loop.create_task(send_random_messages())
     bot.loop.create_task(send_goodmorning_message())
-    #bot.loop.create_task(daily_mention())
     birthday_message.start()
 
 
@@ -145,41 +90,20 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    if is_pure_text(message.content):
+    if check_keyword(message.content, "31"):
         await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF"),
-    if is_pure_text2(message.content):
+    if check_keyword(message.content, "ibo"):
         await message.reply(":sob: :skull:")
-    if is_pure_text3(message.content):
+    if check_keyword(message.content, "41"):
         await message.reply(":flag_tr:")
-    if is_pure_text4(message.content):
-        await message.reply("flag_tr:")
+    if check_keyword(message.content, "17"):
+        await message.reply(":flag_tr:")
     if message.content.lower() == "sa":
         await message.channel.send("as")
     if message.author.id == 316608072669986816:  # author ID
         if message.content.lower() == "kufredecem":
             await message.channel.send("amcik")
     await bot.process_commands(message)
-
-
-async def daily_mention():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(1077907619630546994)
-    user = await bot.fetch_user(673274021567004712)
-    
-    while not bot.is_closed():
-        now = datetime.now()
-        random_hour = random.randint(0, 23)
-        random_minute = random.randint(0, 59)
-        random_time = now.replace(hour=random_hour, minute=random_minute, second=0, microsecond=0)
-
-        if random_time < now:
-            random_time += timedelta(days=1)
-
-        wait_time = (random_time - now).total_seconds()
-        await asyncio.sleep(wait_time)
-        
-        await channel.send(f'{user.mention} merasim')
-        await asyncio.sleep(24 * 60 * 60)
 
 
 ### "!" Commands
