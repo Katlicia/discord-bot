@@ -7,14 +7,25 @@ class SlashCommands(commands.Cog):
         self.bot = bot
 
     async def ensure_log_channel(self, guild: discord.Guild):
-        # Checks channel named Alo-log if doesn2t exit creates one.
+        # Creates alo-log channel if doesn't exist. 
         log_channel = discord.utils.get(guild.text_channels, name="alo-log")
         if log_channel is None:
+            # Handling channel permissions.
             overwrites = {
-                guild.default_role: discord.PermissionOverwrite(view_channel = False),
-                guild.default_role: discord.PermissionOverwrite(read_messages=True, send_messages=False),
-                guild.me: discord.PermissionOverwrite(send_messages=True)
+                guild.default_role: discord.PermissionOverwrite(view_channel=False),  # Default role can't see the channel.
+                guild.me: discord.PermissionOverwrite(view_channel=True, send_messages=True),  # Bot can see the channel and send messages.
             }
+
+            # Checking roles.
+            for role in guild.roles:
+                if role.permissions.ban_members:
+                    # Roles with ban permission can see the log. 
+                    overwrites[role] = discord.PermissionOverwrite(view_channel=True, send_messages=False)
+                else:
+                    # Others can't.
+                    overwrites[role] = discord.PermissionOverwrite(view_channel=False)
+
+            # Creating channel.
             log_channel = await guild.create_text_channel("alo-log", overwrites=overwrites)
         return log_channel
 
@@ -45,18 +56,18 @@ class SlashCommands(commands.Cog):
         await interaction.response.defer(ephemeral=True)
         if amount > 0:
             deleted = await interaction.channel.purge(limit=amount)
-            await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after=5)
             # Saves the process in alo-log
             log_channel = await self.ensure_log_channel(interaction.guild)
             await log_channel.send(f"{interaction.user.name} deleted {len(deleted)} messages in {interaction.channel.name}.")
+            await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True)
         else:
-            await interaction.followup.send("Invalid number.", ephemeral=True, delete_after=5)
+            await interaction.followup.send("Invalid number.", ephemeral=True)
 
     # If user doesn't have the permission to remove messages show error to only user.
     @temizle.error
     async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
-            await interaction.followup.send("You can't use this command.", ephemeral=True, delete_after=5)
+            await interaction.followup.send("You can't use this command.", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(SlashCommands(bot))
