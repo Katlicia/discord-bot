@@ -11,6 +11,9 @@ import re
 from strings import *
 import requests
 import json
+import youtube_dl
+from discord import FFmpegPCMAudio
+
 
 load_dotenv()
 
@@ -25,7 +28,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 CHANNEL_ID = 1077904975902019676
 
-@tasks.loop(hours=10)
+@tasks.loop(hours=20)
 async def birthday_message():
     channel = bot.get_channel(1077904975902019676)
     guild = bot.get_guild(1077904974983479348)
@@ -451,6 +454,88 @@ async def commands(ctx):
 - *`ban`* (Admin) - Bans user.
 - *`temizle`* (Admin) - Clears last X messages from chat."""
 )   
+
+
+# Music Settings
+youtube_dl.utils.bug_reports_message = lambda: ''
+ytdl_format_options = {
+    'format': 'bestaudio/best',
+    'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
+    'restrictfilenames': True,
+    'noplaylist': True,
+    'nocheckcertificate': True,
+    'ignoreerrors': False,
+    'logtostderr': False,
+    'quiet': True,
+    'no_warnings': True,
+    'default_search': 'auto',
+    'source_address': '0.0.0.0'  # ipv6 sorunlarını önler
+}
+ffmpeg_options = {
+    'options': '-vn'
+}
+ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
+
+class YTDLSource(discord.PCMVolumeTransformer):
+    def __init__(self, source, *, data, volume=0.5):
+        super().__init__(source, volume)
+
+        self.data = data
+
+        self.title = data.get('title')
+        self.url = data.get('url')
+
+    @classmethod
+    async def from_url(cls, url, *, loop=None, stream=False):
+        loop = loop or asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+
+        if 'entries' in data:
+            # Takes only the first item in playlist.
+            data = data['entries'][0]
+
+        filename = data['url'] if stream else ytdl.prepare_filename(data)
+        return cls(FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+
+# Join command
+@bot.command()
+async def join(ctx):
+    if not ctx.message.author.voice:
+        await ctx.send(f'{ctx.author.name}, you should be in voice chat!')
+        return
+
+    channel = ctx.message.author.voice.channel
+    await channel.connect()
+
+# Leave command
+@bot.command()
+async def leave(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_connected():
+        await voice_client.disconnect()
+
+# Play Music Command
+@bot.command()
+async def play(ctx, url):
+    try:
+        server = ctx.message.guild
+        voice_channel = server.voice_client
+
+        async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=bot.loop, stream=True)
+            voice_channel.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+
+        await ctx.send(f'Playing: {player.title}')
+    except Exception as e:
+        print(f'Hata: {e}')
+        await ctx.send('An error occured.')
+
+# Stop Command
+@bot.command()
+async def stop(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        voice_client.stop()
 
 
 #### "/" Commands
