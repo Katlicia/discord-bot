@@ -11,9 +11,8 @@ import re
 from strings import *
 import requests
 import json
-import youtube_dl
 from discord import FFmpegPCMAudio
-
+import yt_dlp as youtube_dl
 
 load_dotenv()
 
@@ -457,23 +456,17 @@ async def commands(ctx):
 
 
 # Music Settings
-youtube_dl.utils.bug_reports_message = lambda: ''
+# YTDL Options
 ytdl_format_options = {
     'format': 'bestaudio/best',
-    'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
-    'restrictfilenames': True,
-    'noplaylist': True,
-    'nocheckcertificate': True,
-    'ignoreerrors': False,
-    'logtostderr': False,
-    'quiet': True,
-    'no_warnings': True,
-    'default_search': 'auto',
-    'source_address': '0.0.0.0'  # ipv6 sorunlarını önler
+    'noplaylist': 'True',
 }
+
 ffmpeg_options = {
-    'options': '-vn'
+    'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+    'options': '-vn',
 }
+
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 class YTDLSource(discord.PCMVolumeTransformer):
@@ -481,7 +474,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
         super().__init__(source, volume)
 
         self.data = data
-
         self.title = data.get('title')
         self.url = data.get('url')
 
@@ -491,11 +483,11 @@ class YTDLSource(discord.PCMVolumeTransformer):
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
 
         if 'entries' in data:
-            # Takes only the first item in playlist.
+            # Take the first item from a playlist
             data = data['entries'][0]
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
-        return cls(FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 # Join command
 @bot.command()
@@ -514,31 +506,27 @@ async def leave(ctx):
     if voice_client.is_connected():
         await voice_client.disconnect()
 
-# Play Music Command
 @bot.command()
 async def play(ctx, url):
     try:
-        # Kullanıcının bir ses kanalında olup olmadığını kontrol et
-        if not ctx.author.voice:
-            await ctx.send("Bir ses kanalında olmanız gerekiyor!")
-            return
+        # Eğer bot bir ses kanalına bağlı değilse bağlan
+        if not ctx.voice_client:
+            channel = ctx.author.voice.channel
+            await channel.connect()
 
-        # Kullanıcının bulunduğu ses kanalına bağlan
-        voice_channel = ctx.author.voice.channel
-        if ctx.voice_client is None:
-            await voice_channel.connect()  # Eğer bot zaten ses kanalına bağlı değilse bağlan
-
+        # Şu anki ses kanalını al
         voice_client = ctx.voice_client
 
+        # Videoyu oynat
         async with ctx.typing():
-            # YouTube URL'sinden ses kaynağını çek
             player = await YTDLSource.from_url(url, loop=bot.loop, stream=True)
             voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        await ctx.send(f"Oynatılıyor: {player.title}")
+        await ctx.send(f'Oynatılıyor: {player.title}')
     except Exception as e:
-        print(f"Hata: {e}")
+        print(f'Hata: {e}')
         await ctx.send('Bir hata oluştu.')
+
 
 # Stop Command
 @bot.command()
