@@ -3,7 +3,7 @@ from discord.ext import commands, tasks
 import asyncio
 import pytz
 from datetime import datetime, timedelta
-from helper_functions import check_keyword
+from others.helper_functions import check_keyword
 
 class AutoCommands(commands.Cog):
     def __init__(self, bot):
