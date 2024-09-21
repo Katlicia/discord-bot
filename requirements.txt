@@ -5,4 +5,4 @@ pytz
 requests
 discord.py[voice]
 youtube_dl
-wavelink
+yt-dlp
