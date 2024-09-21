@@ -3,6 +3,3 @@ discord-py-slash-command
 python-dotenv
 pytz
 requests
-discord.py[voice]
-youtube_dl
-yt-dlp
