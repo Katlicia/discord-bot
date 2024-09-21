@@ -58,7 +58,7 @@ class SlashCommands(commands.Cog):
             deleted = await interaction.channel.purge(limit=amount)
             # Saves the process in alo-log
             log_channel = await self.ensure_log_channel(interaction.guild)
-            await log_channel.send(f"{interaction.user.name} deleted {len(deleted)} messages in #{interaction.channel.name}.")
+            await log_channel.send(f"{interaction.user.name} deleted {len(deleted)} messages in #{interaction.channel.name} .")
             await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True)
         else:
             await interaction.followup.send("Invalid number.", ephemeral=True)
