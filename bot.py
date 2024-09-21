@@ -518,17 +518,27 @@ async def leave(ctx):
 @bot.command()
 async def play(ctx, url):
     try:
-        server = ctx.message.guild
-        voice_channel = server.voice_client
+        # Kullanıcının bir ses kanalında olup olmadığını kontrol et
+        if not ctx.author.voice:
+            await ctx.send("Bir ses kanalında olmanız gerekiyor!")
+            return
+
+        # Kullanıcının bulunduğu ses kanalına bağlan
+        voice_channel = ctx.author.voice.channel
+        if ctx.voice_client is None:
+            await voice_channel.connect()  # Eğer bot zaten ses kanalına bağlı değilse bağlan
+
+        voice_client = ctx.voice_client
 
         async with ctx.typing():
+            # YouTube URL'sinden ses kaynağını çek
             player = await YTDLSource.from_url(url, loop=bot.loop, stream=True)
-            voice_channel.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+            voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-        await ctx.send(f'Playing: {player.title}')
+        await ctx.send(f"Oynatılıyor: {player.title}")
     except Exception as e:
-        print(f'Hata: {e}')
-        await ctx.send('An error occured.')
+        print(f"Hata: {e}")
+        await ctx.send('Bir hata oluştu.')
 
 # Stop Command
 @bot.command()
