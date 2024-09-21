@@ -59,7 +59,7 @@ class SlashCommands(commands.Cog):
             # Saves the process in alo-log
             log_channel = await self.ensure_log_channel(interaction.guild)
             await log_channel.send(f"{interaction.user.name} deleted {len(deleted)} messages in #{interaction.channel.name} .")
-            await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True)
+            await interaction.followup.send(f"{len(deleted)} messages deleted successfully.", ephemeral=True, delete_after = 10)
         else:
             await interaction.followup.send("Invalid number.", ephemeral=True)
 
@@ -67,7 +67,7 @@ class SlashCommands(commands.Cog):
     @temizle.error
     async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
-            await interaction.followup.send("You can't use this command.", ephemeral=True)
+            await interaction.followup.send("You can't use this command.", ephemeral=True, delete_after = 10)
 
 async def setup(bot):
     await bot.add_cog(SlashCommands(bot))
