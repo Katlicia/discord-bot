@@ -79,7 +79,6 @@ class AutoCommands(commands.Cog):
 
     @tasks.loop(hours=15)
     async def birthday_message(self):
-        print("DOGUM GUNU KODU CALISIYOR")
         role = discord.utils.get(self.guild.roles, name="Dogum Gunu Cocugu")
         if role is None:
             print("Role not found.")

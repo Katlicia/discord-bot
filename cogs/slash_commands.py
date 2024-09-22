@@ -44,7 +44,7 @@ class SlashCommands(commands.Cog):
 
     # Error handler for permission errors
     @ban.error
-    async def ban_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def ban_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
             await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True, delete_after=5)
 
@@ -65,7 +65,7 @@ class SlashCommands(commands.Cog):
 
     # If user doesn't have the permission to remove messages show error to only user.
     @temizle.error
-    async def temizle_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def temizle_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
             await interaction.followup.send("You can't use this command.", ephemeral=True, delete_after = 10)
 
