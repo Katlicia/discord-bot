@@ -104,7 +104,7 @@ class AutoCommands(commands.Cog):
 
         while not self.bot.is_closed():
             now = datetime.now(turkey_tz)
-            target_time = now.replace(hour=20, minute=10, second=0, microsecond=0)
+            target_time = now.replace(hour=10, minute=00, second=0, microsecond=0)
             
             if now > target_time:
                 target_time += timedelta(days=1)
