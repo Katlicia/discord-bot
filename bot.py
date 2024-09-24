@@ -16,17 +16,6 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_ready():
     print(f"Bot signed in as: {bot.user.name}")
 
-# # Calls on joining guild and gives admin to bot.
-# @bot.event
-# async def on_guild_join(guild):
-#     # Create Role give admin.
-#     role = await guild.create_role(name="alo", permissions=discord.Permissions(administrator=True), reason="Auto Role for Bot")
-
-#     # Set the role on top.
-#     await guild.edit_role_positions(positions={role: len(guild.roles) - 1})
-
-#     print(f"{guild.name} Role is on top.")
-
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
