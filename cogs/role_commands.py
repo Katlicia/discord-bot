@@ -10,11 +10,11 @@ class GenderAgeSelectView(View):
     # Gender Buttons
     @discord.ui.button(label="Erkek", style=discord.ButtonStyle.primary, custom_id="gender_male")
     async def male_button(self, interaction: discord.Interaction, button: Button):
-        await self.handle_gender_selection(interaction, "xx")
+        await self.handle_gender_selection(interaction, "xy")
     
     @discord.ui.button(label="Kız", style=discord.ButtonStyle.primary, custom_id="gender_female")
     async def female_button(self, interaction: discord.Interaction, button: Button):
-        await self.handle_gender_selection(interaction, "xy")
+        await self.handle_gender_selection(interaction, "xx")
 
     # Age Select Menu
     @discord.ui.select(
