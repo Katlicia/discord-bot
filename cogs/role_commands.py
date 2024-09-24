@@ -105,7 +105,7 @@ class RoleCommands(commands.Cog):
                 color=discord.Color.blurple()
             )
             embed.add_field(name="Cinsiyet Seçimi", value="Erkek veya Kız seçin.", inline=False)
-            embed.add_field(name="Yaş Aralığı", value="15-18, 19, 20, 21, 22, 23+ yaş seçeneklerini seçin.", inline=False)
+            embed.add_field(name="Yaş Aralığı", value="18-, 19, 20, 21, 22, 23+ yaş seçeneklerini seçin.", inline=False)
             embed.set_footer(text="Roller otomatik olarak atanacaktır.")
             
             view = GenderAgeSelectView(self.bot)
