@@ -9,7 +9,6 @@
 | patlat     | Fun      | ! Command  | Sends an ASCII image of trollface.                 |
 | zar        | Fun      | ! Command  | Sends an integer between 1-(Desired Number)        |
 | birlestir  | Fun      | ! Command  | Sends a random word combined from given words.     |
-| kaçcm      | Fun      | ! Command  | Sends a random integer between 5-25.               |
 | slap       | Fun      | ! Command  | Sends an anime themed slap gif.                    |
 | kiss       | Fun      | ! Command  | Sends an anime themed kiss gif.                    |
 | hug        | Fun      | ! Command  | Sends an anime themed hug gif.                     |
