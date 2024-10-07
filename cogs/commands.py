@@ -26,12 +26,7 @@ class Commands(commands.Cog):
 
     @commands.command()
     async def duyuru(self, ctx):
-        await ctx.send("ibo olayi (gerisini biliyorsunuz)")
-
-    @commands.command()
-    async def kaçcm(self, ctx):
-        cm = random.randint(5, 25)
-        await ctx.send(f"{cm} cm \n{'8' + '=' * cm + 'D'}")
+        await ctx.send("ibo olayi (gerisini biliyorsunuz)") 
 
 
     @commands.command()
@@ -314,7 +309,6 @@ class Commands(commands.Cog):
     - *`patlat`* - Sends an ASCII image of trollface.
     - *`zar`* - Sends an integer between 1-(Desired Number).
     - *`birlestir`* - Sends a random word combined from given words.
-    - *`kaçcm`* - Sends a random integer between 5-25.
     - *`slap`* - Sends an anime themed slap gif.
     - *`kiss`* - Sends an anime themed kiss gif.
     - *`hug`* - Sends an anime themed hug gif.
