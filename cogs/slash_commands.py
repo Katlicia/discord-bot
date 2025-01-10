@@ -42,12 +42,30 @@ class SlashCommands(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
 
-    # Error handler for permission errors
+    # Error handler for permission errors.
     @ban.error
     async def ban_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
-            await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True, delete_after=5)
+            await interaction.response.send_message("You don't have the permission to use this command.", ephemeral=True, delete_after=5)
 
+    # Kicks User
+    @app_commands.command(name="kick", description="Kick User")
+    @app_commands.checks.has_permissions(kick_members=True)
+    async def kick(self, interaction: discord.Interaction, member: discord.Member, reason: str = None):
+        try:
+            await member.kick(reason=reason)
+            await interaction.response.send_message(f"{member.name} is kicked. Reason: {reason}", ephemeral=True, delete_after=5)
+            # Saves the process in alo-log.
+            log_channel = await self.ensure_log_channel(interaction.guild)
+            await log_channel.send(f"{interaction.user.name} kicked {member.name}. Reason: {reason}")
+        except Exception as e:
+            await interaction.response.send_message(f"An error happened: {str(e)}", ephemeral=True, delete_after=5)
+
+    # Error handler for permission errors.
+    @kick.error
+    async def kick_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+        if isinstance(error, app_commands.CheckFailure):
+            await interaction.response.send_message("You don't have the permission to use this command.", ephemeral=True, delete_after=5)
 
     # Removes Messages
     @app_commands.command(name="temizle", description="Remove last X messages.")
@@ -67,7 +85,7 @@ class SlashCommands(commands.Cog):
     @temizle.error
     async def temizle_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CheckFailure):
-            await interaction.followup.send("You can't use this command.", ephemeral=True)
+            await interaction.followup.send("You don't have the permission to use this command.", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(SlashCommands(bot))
