@@ -17,4 +17,5 @@
 | boy        | Info     | ! Command  | Returns given height.                              |
 | commands   | Info     | ! Command  | Returns command list.                              |
 | ban        | Admin    | / Command  | Bans user. (Has log system)                        |
+| kick       | Admin    | / Command  | Kicks user. (Has log system)                       |
 | temizle    | Admin    | / Command  | Clears last X messages from chat. (Has log system) |
