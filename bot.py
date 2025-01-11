@@ -15,6 +15,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 @bot.event
 async def on_ready():
     print(f"Bot signed in as: {bot.user.name}")
+    await bot.tree.sync()
 
 @bot.event
 async def on_message(message):
