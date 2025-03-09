@@ -314,9 +314,10 @@ class Commands(commands.Cog):
     - *`hug`* - Sends an anime themed hug gif.
     - *`plaka`* - Returns desired city's plate number vice versa.
     - *`boy`* - Returns given height.
-    - *`zaza`* - Returns an angry "no" gif.
+    - *`zaza`* - Returns an angry "no" gif. \n
     # / Commands
     - *`ban`* (Admin) - Bans user.
+    - *`kick`* (Admin) - Kicks user.
     - *`temizle`* (Admin) - Clears last X messages from chat."""
     )   
 
