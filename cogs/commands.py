@@ -4,7 +4,7 @@ from others.variables import *
 import random
 import json
 import requests
-import os
+from config import *
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -12,7 +12,7 @@ class Commands(commands.Cog):
         self.sent_hug_gifs = set()
         self.sent_kiss_gifs = set()
         self.sent_slap_gifs = set()
-        self.TENOR_TOKEN = os.getenv("TENOR_TOKEN")
+        self.TENOR_TOKEN = TENOR_TOKEN
 
     ### "!" Commands
 
@@ -48,13 +48,25 @@ class Commands(commands.Cog):
             await ctx.send(f"Boyunuz {height} cm.")
 
 
-    # Sends avatar of member.
+    # Sends general avatar of member.
     @commands.command()
     async def avatar(self, ctx, member: discord.Member = None):
         if member is None:
             member = ctx.author
         if member.avatar != member.default_avatar:
             avatar_url = member.avatar.url
+        else:
+            avatar_url = member.default_avatar
+        await ctx.send(f"{avatar_url}")
+
+
+    # Sends server avatar of member.
+    @commands.command()
+    async def savatar(self, ctx, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+        if member.avatar != member.default_avatar:
+            avatar_url = member.guild_avatar.url
         else:
             avatar_url = member.default_avatar
         await ctx.send(f"{avatar_url}")
@@ -302,7 +314,8 @@ class Commands(commands.Cog):
         await ctx.send(
         """\
     >>> # ! Commands
-    - *`avatar`* - Retrieves desired users profile picture.
+    - *`avatar`* - Retrieves desired users general profile picture.
+    - *`savatar`* - Retrieves desired users server profile picture.
     - *`avatarsv`* - Retrieves server icon.
     - *`banner`* - Retrieves desired users banner picture.
     - *`bannersv`* - Retrieves server banner.

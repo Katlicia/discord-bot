@@ -4,13 +4,13 @@ from dotenv import load_dotenv
 import os
 import asyncio
 from others.helper_functions import check_keyword
+from config import *
 
 load_dotenv()
 
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = DISCORD_TOKEN
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
-
 
 @bot.event
 async def on_ready():

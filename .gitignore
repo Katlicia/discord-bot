@@ -3,3 +3,4 @@ __pycache__/
 cogs/__pycache__/
 orijinal/
 others/__pycache__/
+config.py
