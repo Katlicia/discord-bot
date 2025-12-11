@@ -2,7 +2,8 @@
 ## Commands 📁
 | Name       | Category | Type       | Description                                        |
 |------------|----------|------------|-------------------------------------------         |
-| avatar     | Data     | ! Command  | Retrieves desired users profile picture.           |
+| avatar     | Data     | ! Command  | Retrieves desired users general profile picture.   |
+| savatar     | Data     | ! Command  | Retrieves desired users server profile picture.   |
 | avatarsv   | Data     | ! Command  | Retrieves server icon.                             |
 | banner     | Data     | ! Command  | Retrieves desired users banner picture.            |
 | bannersv   | Data     | ! Command  | Retrieves server banner.                           |
