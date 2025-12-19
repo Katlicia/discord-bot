@@ -1,56 +1,63 @@
 import discord
 from discord.ext import commands, tasks
-import asyncio
 import pytz
-from datetime import datetime, timedelta
+from datetime import datetime, time
 from others.helper_functions import check_keyword
 
 class AutoCommands(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot    
-        self.channel = None
-        self.guild = bot.get_guild(1077904974983479348)
-        self.birthday_message.start()
-        self.bot.loop.create_task(self.send_goodmorning_message())
+        self.bot = bot
+        self.guild_id = 1077904974983479348
+        self.last_birthday_check = None
 
-    @tasks.loop(hours=15)
+    @tasks.loop(hours=2)
     async def birthday_message(self):
-        role = discord.utils.get(self.guild.roles, name="Dogum Gunu Cocugu")
-        if role is None:
-            print("Role not found.")
+        today = datetime.now(pytz.timezone("Europe/Istanbul")).date()
+
+        if self.last_birthday_check == today:
             return
-        members_with_role = [member for member in self.guild.members if role in member.roles]
-        if members_with_role:
-            member_mentions = ", ".join([member.mention for member in members_with_role])
-            if self.channel is None:
-                self.channel = self.bot.get_channel(1077904975902019676)
-            await self.channel.send(f"Doğum günün kutlu olsun {member_mentions}")
+
+        guild = self.bot.get_guild(self.guild_id)
+        if not guild:
+            return
+
+        role = discord.utils.get(guild.roles, name="Dogum Gunu Cocugu")
+        if not role:
+            return
+
+        members = [m for m in guild.members if role in m.roles]
+        if not members:
+            return
+
+        channel = self.bot.get_channel(1077904975902019676)
+        if not channel:
+            return
+
+        mentions = ", ".join(m.mention for m in members)
+        await channel.send(f"🎉 Doğum günün kutlu olsun {mentions}")
+
+        self.last_birthday_check = today
 
     @birthday_message.before_loop
     async def before_birthday_message(self):
         await self.bot.wait_until_ready()
 
-    async def send_goodmorning_message(self):
-        await self.bot.wait_until_ready()
+    @tasks.loop(time=time(hour=8, tzinfo=pytz.timezone("Europe/Istanbul")))
+    async def goodmorning_message(self):
+        channel = self.bot.get_channel(1077904975902019676)
+        if channel:
+            await channel.send("gunaydin gencolar")
 
-        if self.channel is None:
-            self.channel = self.bot.get_channel(1077904975902019676)
-        
-        turkey_tz = pytz.timezone('Europe/Istanbul')
+    async def cog_load(self):
+        self.birthday_message.start()
+        self.goodmorning_message.start()
 
-        while not self.bot.is_closed():
-            now = datetime.now(turkey_tz)
-            target_time = now.replace(hour=10, minute=00, second=0, microsecond=0)
-            
-            if now > target_time:
-                target_time += timedelta(days=1)
+    async def cog_unload(self):
+        self.birthday_message.cancel()
+        self.goodmorning_message.cancel()
 
-            wait_time = (target_time - now).total_seconds()
-            await asyncio.sleep(wait_time)
 
-            if self.channel is not None:
-                await self.channel.send("gunaydin gencolar")
-
+    @commands.Cog.listener()
     async def on_message(self, message):
         if message.author == self.bot.user:
             return
