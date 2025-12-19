@@ -4,7 +4,10 @@ from others.variables import *
 import random
 import json
 import requests
-from config import *
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -12,7 +15,7 @@ class Commands(commands.Cog):
         self.sent_hug_gifs = set()
         self.sent_kiss_gifs = set()
         self.sent_slap_gifs = set()
-        self.TENOR_TOKEN = TENOR_TOKEN
+        self.TENOR_TOKEN = os.getenv("TENOR_TOKEN")
 
     ### "!" Commands
 
