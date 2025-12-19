@@ -3,3 +3,4 @@ discord-py-slash-command
 python-dotenv
 pytz
 requests
+openai
