@@ -4,3 +4,4 @@ python-dotenv
 pytz
 requests
 openai
+python-dotenv
