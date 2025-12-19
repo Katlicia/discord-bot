@@ -11,7 +11,7 @@ class SlashCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.client = OpenAI(
-            api_key=os.getenv("OPEN_AI_KEY")
+            api_key=os.getenv("OPEN_AI_TOKEN")
         )
 
     async def ensure_log_channel(self, guild: discord.Guild):
