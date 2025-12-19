@@ -3,7 +3,7 @@
 | Name       | Category | Type       | Description                                        |
 |------------|----------|------------|-------------------------------------------         |
 | avatar     | Data     | ! Command  | Retrieves desired users general profile picture.   |
-| savatar     | Data     | ! Command  | Retrieves desired users server profile picture.   |
+| savatar    | Data     | ! Command  | Retrieves desired users server profile picture.    |
 | avatarsv   | Data     | ! Command  | Retrieves server icon.                             |
 | banner     | Data     | ! Command  | Retrieves desired users banner picture.            |
 | bannersv   | Data     | ! Command  | Retrieves server banner.                           |
@@ -20,3 +20,4 @@
 | ban        | Admin    | / Command  | Bans user. (Has log system)                        |
 | kick       | Admin    | / Command  | Kicks user. (Has log system)                       |
 | temizle    | Admin    | / Command  | Clears last X messages from chat. (Has log system) |
+| chat       | Fun      | / Command  | Chat with Alo Bot AI.                              |
