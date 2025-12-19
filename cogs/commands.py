@@ -334,7 +334,8 @@ class Commands(commands.Cog):
     # / Commands
     - *`ban`* (Admin) - Bans user.
     - *`kick`* (Admin) - Kicks user.
-    - *`temizle`* (Admin) - Clears last X messages from chat."""
+    - *`temizle`* (Admin) - Clears last X messages from chat.
+    - *`chat`* - Chat with Alo bot."""
     )   
 
 async def setup(bot):
