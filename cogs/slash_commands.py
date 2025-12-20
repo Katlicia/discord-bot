@@ -139,7 +139,7 @@ class SlashCommands(commands.Cog):
             elif "rate_limit" in error_text:
                 error_message = "Rate limit exceeded. Try again later."
             elif "invalid_api_key" in error_text:
-                error_message = "Key error. Contact the developer."
+                error_message = "API Key error. Contact the developer."
             elif "model_not_found" in error_text:
                 error_message = "No model found."
             elif "permission" in error_text:
