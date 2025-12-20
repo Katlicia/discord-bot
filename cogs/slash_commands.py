@@ -145,8 +145,9 @@ class SlashCommands(commands.Cog):
             elif "permission" in error_text:
                 error_message = "No access to this model."
             
-            log_channel = await self.ensure_log_channel(interaction.guild)
-            await log_channel.send(f"OpenAI error", error_message, str(e))
+            if interaction.guild:
+                log_channel = await self.ensure_log_channel(interaction.guild)
+                await log_channel.send(f"OpenAI error {error_message} {str(e)}")
 
             await interaction.followup.send(error_message, ephemeral=True)
         
@@ -160,15 +161,15 @@ class SlashCommands(commands.Cog):
     @chat.error
     async def chat_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CommandOnCooldown):
-            await interaction.response.send_message(
-                f"Bu komutu tekrar kullanmak için **{int(error.retry_after)} saniye** beklemelisin.",
-                ephemeral=True
-            )
+            msg = f"Bu komutu tekrar kullanmak için **{int(error.retry_after)} saniye** beklemelisin."
         else:
-            await interaction.response.send_message(
-                "Bir hata oluştu.",
-                ephemeral=True
-            )
+            msg = "Bir hata oluştu."
+
+        if interaction.response.is_done():
+            await interaction.followup.send(msg, ephemeral=True)
+        else:
+            await interaction.response.send_message(msg, ephemeral=True)
+
 
 async def setup(bot):
     await bot.add_cog(SlashCommands(bot))
