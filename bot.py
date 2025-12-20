@@ -3,7 +3,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import asyncio
-from others.helper_functions import check_keyword
 
 load_dotenv()
 
