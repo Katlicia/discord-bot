@@ -61,19 +61,12 @@ class AutoCommands(commands.Cog):
     async def on_message(self, message):
         if message.author == self.bot.user:
             return
-        if check_keyword(message.content, "31"):
-            await message.channel.send("QWPEOIRTPOWEIORHOPOIKWRETPOLIHJKWRTLŞHGKWERFPOĞGWERF")
-        if check_keyword(message.content, "ibo"):
-            await message.reply(":sob: :skull:")
         if check_keyword(message.content, "41"):
             await message.reply(":flag_tr:")
         if check_keyword(message.content, "17"):
             await message.reply(":flag_tr:")
         if message.content.lower() == "sa":
             await message.channel.send("as")
-        if message.author.id == 316608072669986816:  # author ID
-            if message.content.lower() == "kufredecem":
-                await message.channel.send("amcik")
         await self.bot.process_commands(message)
 
 async def setup(bot):
