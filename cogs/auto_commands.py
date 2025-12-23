@@ -67,7 +67,6 @@ class AutoCommands(commands.Cog):
             await message.reply(":flag_tr:")
         if message.content.lower() == "sa":
             await message.channel.send("as")
-        await self.bot.process_commands(message)
 
 async def setup(bot):
     await bot.add_cog(AutoCommands(bot))
