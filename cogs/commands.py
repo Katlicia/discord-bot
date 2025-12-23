@@ -68,12 +68,8 @@ class Commands(commands.Cog):
     async def savatar(self, ctx, member: discord.Member = None):
         if member is None:
             member = ctx.author
-        if member.avatar != member.default_avatar:
-            avatar_url = member.guild_avatar.url
-        else:
-            avatar_url = member.default_avatar
+        avatar_url = member.display_avatar.url
         await ctx.send(f"{avatar_url}")
-
 
     # Sends avatar of server.
     @commands.command()
