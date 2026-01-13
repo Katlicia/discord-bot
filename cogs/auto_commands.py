@@ -10,7 +10,7 @@ class AutoCommands(commands.Cog):
         self.guild_id = 1077904974983479348
         self.last_birthday_check = None
 
-    @tasks.loop(hours=2)
+    @tasks.loop(hours=8)
     async def birthday_message(self):
         today = datetime.now(pytz.timezone("Europe/Istanbul")).date()
 
@@ -34,7 +34,7 @@ class AutoCommands(commands.Cog):
             return
 
         mentions = ", ".join(m.mention for m in members)
-        await channel.send(f"🎉 Doğum günün kutlu olsun {mentions}")
+        await channel.send(f"Doğum günün kutlu olsun {mentions} 🎉")
 
         self.last_birthday_check = today
 
