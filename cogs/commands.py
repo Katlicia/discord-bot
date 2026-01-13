@@ -40,6 +40,9 @@ class Commands(commands.Cog):
         else:
             await ctx.send("Invalid number!")
 
+    @commands.command()
+    async def ilkkan(self, ctx):
+        await ctx.send(f"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdl0BB2m-vb8ux5DU6PL5Soyi2PRl4QTNhAqDQF6OkXNlV2KAt")
 
     @commands.command()
     async def boy(self, ctx, height: int):
@@ -327,6 +330,7 @@ class Commands(commands.Cog):
     - *`plaka`* - Returns desired city's plate number vice versa.
     - *`boy`* - Returns given height.
     - *`zaza`* - Returns an angry "no" gif. \n
+    - *`ilkkan`* - Sends picture of Ilkkan from Gibi.
     # / Commands
     - *`ban`* (Admin) - Bans user.
     - *`kick`* (Admin) - Kicks user.
