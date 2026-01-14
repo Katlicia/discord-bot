@@ -65,6 +65,8 @@ class AutoCommands(commands.Cog):
             await message.reply(":flag_tr:")
         if check_keyword(message.content, "17"):
             await message.reply(":flag_tr:")
+        if check_keyword(message.content, "ilkkan"):
+            await message.reply("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdl0BB2m-vb8ux5DU6PL5Soyi2PRl4QTNhAqDQF6OkXNlV2KAt")
         if message.content.lower() == "sa":
             await message.channel.send("as")
 
