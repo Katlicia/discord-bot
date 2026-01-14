@@ -330,7 +330,6 @@ class Commands(commands.Cog):
     - *`plaka`* - Returns desired city's plate number vice versa.
     - *`boy`* - Returns given height.
     - *`zaza`* - Returns an angry "no" gif. \n
-    - *`ilkkan`* - Sends picture of Ilkkan from Gibi.
     # / Commands
     - *`ban`* (Admin) - Bans user.
     - *`kick`* (Admin) - Kicks user.
