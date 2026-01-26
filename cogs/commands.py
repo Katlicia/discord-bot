@@ -40,10 +40,6 @@ class Commands(commands.Cog):
         else:
             await ctx.send("Invalid number!")
 
-    # @commands.command()
-    # async def ilkkan(self, ctx):
-        # await ctx.send(f"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdl0BB2m-vb8ux5DU6PL5Soyi2PRl4QTNhAqDQF6OkXNlV2KAt")
-
     @commands.command()
     async def boy(self, ctx, height: int):
         if height <= 100:
