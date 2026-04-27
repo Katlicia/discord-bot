@@ -102,6 +102,15 @@ class Commands(commands.Cog):
         await ctx.send(f"{banner_url}")
 
 
+    # Sends guild banner of member.
+    @commands.command()
+    async def svbanner(self, ctx, member: discord.Member = None):
+        if member is None:
+            member = ctx.author
+        membe = await ctx.guild.fetch_member(member.id)
+        banner_url = member.display_banner.url if member.display_banner else "Banner not found."
+        await ctx.send(f"{banner_url}")
+
     # Finds city name by plate vice versa. (Turkiye only.)
     @commands.command()
     async def plaka(self, ctx, city: str):
